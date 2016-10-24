@@ -34,7 +34,8 @@
                             <div class="alert alert-danger">
                                 <span class="glyphicon glyphicon-remove"></span><strong> Error! Please check all page inputs.</strong>
                             </div>
-                    </div>';       
+                    </div>';   
+                    unset($_SESSION['error']);    
                 }
             ?>  
         </div>

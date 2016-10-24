@@ -1,7 +1,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Add User</h1>
+                    <h1 class="page-header">Add Products</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -16,97 +16,90 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <form action="../dashboard/createUser" class="ajxCall" method="post">
+                            <form action="../user/storeItem" method="post" enctype="multipart/form-data">
                                 
-                                <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label for="fname">
-                                                First Name
-                                            </label>
-                                                <input type="text" name="fname" class="form-control" placeholder="name" required>
-                                        </div>
-                                    
-                                        <div class="form-group col-md-6">
-                                            <label for="lastname">
-                                                Last Name
-                                            </label>
-                                                <input type="text" name="lname" class="form-control" placeholder="last name" required>
-                                        </div>
-                                            
-                                </div>
+                        
+                                <div class="form-group">
+                                    <label for="Product Name">
+                                        Product Name
+                                    </label>
+                                        <input type="text" name="product_name" class="form-control" placeholder="product name" required>
+                                </div>                                                                    
 
                                 <div class="form-group">
-                                    <label for="email">
-                                        Email
+                                    <label for="Quantity">
+                                        Quantity
                                     </label>
-                                        <input type="text" name="email" class="form-control" placeholder="email" required>
+                                        <input type="text" name="quantity" class="form-control" placeholder="quantity" required>
                                 </div>
                                 
                                     <div class="form-group">
-                                        <label for="address">
-                                            Address
+                                        <label for="price">
+                                            Price
                                         </label>
-                                            <input type="text" name="address" class="form-control" placeholder="address" required>
+                                            <input type="text" name="price" class="form-control" placeholder="price" required>
                                     </div>
                                         
                                 
                                     <div class="form-group">
                                         <label for="phonenumber">
-                                            Phone Number
+                                            Product Detail
                                         </label>
-                                            <input type="text" name="number" class="form-control" placeholder="Phone Number" required>
+                                            <textarea type="text" name="detail" class="form-control" placeholder="Details" required></textarea>
                                     </div>
+
 
                                     <div class="form-group">
                                         <label for="phonenumber">
-                                            Password
+                                            brand
                                         </label>
-                                            <input type="text" name="password" class="form-control" placeholder="password" required>
+                                            <input type="text" name="brand" class="form-control" placeholder="brand" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="phonenumber">
-                                            Retype-Password
+                                        <label for="image_upload">
+                                            image upload
                                         </label>
-                                            <input type="text" name="re-password" class="form-control" placeholder=" retype-password" required>
+                                            <input id="file-0a" class="file" type="file" name="fileToUpload[]" multiple>
                                     </div>
 
 
                                     <div class="form-group">
-                                        <label for="country">
-                                            Country
+                                        <label for="category">
+                                            category
                                         </label>
                                         
-                                        <select class="form-control" name="country" required="">
+                                        <select class="form-control" name="category" required="">
 
                                             <option value="">
-                                                --Select your country--
+                                                --Select category--
                                             </option>
 
                                             <option value="Np">
-                                                Nepal
+                                                Shirt
                                             </option>
                                             <option value="Ch">
-                                                China
+                                                Pant
                                             </option>
                                             <option value="Bang">
-                                                Bangladesh
+                                                T-shirt
                                             </option>
                                             <option value="USA">
-                                                USA
-                                            </option>
-                                            <option value="Canada">
-                                                Canada
-                                            </option>
-                                            <option value="aus">
-                                                Australia
+                                                Trousers
                                             </option>
                                         </select>
                                     </div>
 
                                 <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button name="submit" class="btn btn-primary">Submit</button>
                                 </div>
+                                <?php
+                                    if (isset($_SESSION['error'])) {
+                                        print_r($_SESSION['error']);
+                                        # code...
+                                        unset($_SESSION['error']);
+                                    }
+                                ?>
                             </form>                         
                         </div>
                     </div>

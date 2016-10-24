@@ -27,10 +27,57 @@ class User extends Controller
 		$this->view->render('dashboard/pages/additems',1);
 	}
 
-	function createUser(){
-		if (isset($_POST)) {
+	function storeItem(){
+
+		if (isset($_POST) && !empty($_POST)) {
 			// code...
-			$this->model->createUser();
+			if(isset($_FILES) && !empty($_FILES["fileToUpload"]["name"][0])){
+				$destination = 'public/images/product-details/';
+				$file = $_FILES;
+				$post = $_POST;
+				new MassUpload($destination,$file,$post);
+
+				$temp = MassUpload::checkImg();
+
+				if ($temp === false) {
+					# code...
+					$_SESSION['error'] = "File is not an Image";
+					header('location: additems');
+				}else{
+					$temp = MassUpload::fileExist();
+					if ($temp === false) {
+						# code...
+						$_SESSION['error'] = "Sorry, file already exists.";
+						header('location: additems');
+					}else{
+						$temp = MassUpload::fileSize();
+						if ($temp === false) {
+							# code...
+							$_SESSION['error'] = "Sorry, your file is too large.";
+							header('location: additems');
+						}else{
+							//
+							$temp = MassUpload::fileFormats();
+							if ($temp === false ) {
+								# code...
+								$_SESSION['error'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+								header('location: additems');
+							}else{
+									$this->model->storeItem();
+									# code...
+									$_SESSION['error'] = 'Successfully Added';
+									header('location: additems');
+								// $temp = MassUpload::checkErrors("galleries");
+								// $errors = $temp;
+							}
+						}
+					}
+				}
+				// $this->model->storeItem();
+			}else{
+				$_SESSION['error'] = 'Please select an image to upload'; 
+				header('location: additems');
+			}
 		}
 	}
 

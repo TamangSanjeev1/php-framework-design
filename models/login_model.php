@@ -25,6 +25,7 @@ class Login_Model extends Model
 			Session::init();
 			Session::set('loggedIn',true);
 			Session::set('type',$this->temp);
+			$_SESSION['user'] = $store[0]['user_id'];
 			header('location: ../dashboard');
 		}else{
 			Session::init();
