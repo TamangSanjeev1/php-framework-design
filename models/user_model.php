@@ -62,10 +62,12 @@ class User_Model extends Model
         }
 	}
 
-	function listUsers(){
-		$sth = $this->db->query('SELECT * FROM users');
+	function listItems(){
+		$sth = $this->db->prepare('SELECT users.user_id,products.product_name,products.product_id, products.product_price, product_category.product_cat_name, products.product_details ,product_images.image_name FROM products INNER JOIN users ON products.user_id=users.user_id JOIN product_category ON products.product_cat_id = product_category.product_cat_id JOIN product_images ON product_images.product_id = products.product_id WHERE products.user_id = :user_id');
 		$sth->setFetchMode(PDO::FETCH_ASSOC);
-		$sth->execute();
+		$sth->execute(array(
+			':user_id' => $_SESSION['user']
+		));
 		$data = $sth->fetchAll();
 		// return json_encode($data);
 		return $data;

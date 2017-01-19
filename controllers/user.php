@@ -86,9 +86,10 @@ class User extends Controller
 		header('location: ../../dashboard');
 	}
 
-	function listUsers(){
-		$this->list = $this->model->listUsers();
-		return $this->list;
+	function listItems(){
+		$this->list = $this->model->listItems();
+		$this->view->itemList = $this->list;
+		$this->view->render('dashboard/pages/listitems',1);
 	}
 
 	function logout(){

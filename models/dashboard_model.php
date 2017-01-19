@@ -19,7 +19,7 @@ class Dashboard_Model extends Model
 	}
 
 	function listUsers(){
-		$sth = $this->db->query('SELECT * FROM users');
+		$sth = $this->db->prepare('SELECT * FROM users');
 		$sth->setFetchMode(PDO::FETCH_ASSOC);
 		$sth->execute();
 		$data = $sth->fetchAll();
