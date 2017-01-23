@@ -14,9 +14,9 @@
                         <div class="panel-heading">
                             <i class="fa fa-users fa-fw"></i> Add User Form
                         </div>
-                        <!-- /.panel-heading -->
+                        <!-- /.panel-heading --><!--class="ajxCall"-->
                         <div class="panel-body">
-                            <form action="../dashboard/createUser" class="ajxCall" method="post">
+                            <form action="../dashboard/createUser"  method="post" enctype="multipart/form-data">
                                 
                                 <div class="row">
                                         <div class="form-group col-md-6">
@@ -69,44 +69,69 @@
                                             Retype-Password
                                         </label>
                                             <input type="text" name="re-password" class="form-control" placeholder=" retype-password" required>
-                                    </div>
+                                    </div>                            
 
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <i class="fa fa-users fa-fw"></i> Company Details
+                                            </div>
 
-                                    <div class="form-group">
-                                        <label for="country">
-                                            Country
-                                        </label>
-                                        
-                                        <select class="form-control" name="country" required="">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="company-name">
+                                                            Company Name
+                                                        </label>
+                                                        <input type="text" name="company_name" class="form-control" placeholder="company name" required>
+                                                    </div>
+                                                    
+                                                    <div class="form-group col-md-6">
+                                                        <label for="company-address">
+                                                            Company Address
+                                                        </label>
+                                                        <input type="text" name="company_address" class="form-control" placeholder="address" required>
+                                                    </div>
 
-                                            <option value="">
-                                                --Select your country--
-                                            </option>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="company-phone">
+                                                            Company Phone
+                                                        </label>
+                                                        <input type="text" name="company_phone" class="form-control" placeholder="phone" required>
+                                                    </div>
 
-                                            <option value="Np">
-                                                Nepal
-                                            </option>
-                                            <option value="Ch">
-                                                China
-                                            </option>
-                                            <option value="Bang">
-                                                Bangladesh
-                                            </option>
-                                            <option value="USA">
-                                                USA
-                                            </option>
-                                            <option value="Canada">
-                                                Canada
-                                            </option>
-                                            <option value="aus">
-                                                Australia
-                                            </option>
-                                        </select>
-                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="company-image">
+                                                            Company Image
+                                                        </label>
+                                                        <input id="file-0a" class="file" type="file" name="fileToUpload[]">
+                                                    </div>
+                                                </div>    
+                                            </div>        
+                                        </div>
+                        
 
                                 <div class="form-group">
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
+
+                                <?php
+                                    if (isset($_SESSION['error'])) {
+                                        # code...
+                                        echo '<div class="col-md-4 col-md-offset-4">
+                                                <div class="';
+
+                                        if ($_SESSION['error'] == 'Successfully Added') {
+                                                    # code...
+                                            echo 'alert alert-success'; 
+                                        }else{
+                                            echo 'alert alert-danger';
+                                        }        
+                                        echo      '">
+                                                    <strong>'.$_SESSION['error'].'</strong>
+                                                </div>
+                                                </div>'; 
+                                        unset($_SESSION['error']);
+                                    }
+                                 
+                                ?>
                             </form>                         
                         </div>
                     </div>

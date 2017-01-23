@@ -23,6 +23,12 @@ class User extends Controller
 		$this->view->render('dashboard/user',1);
 	}
 
+	function userProfile(){
+		$this->profile = $this->model->userProfile();
+		$this->view->usrProfile = $this->profile;
+		$this->view->render('dashboard/pages/userprofile',1);
+	}
+
 	function additems(){
 		$this->view->render('dashboard/pages/additems',1);
 	}
