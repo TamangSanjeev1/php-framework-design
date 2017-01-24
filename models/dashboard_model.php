@@ -74,9 +74,15 @@ class Dashboard_Model extends Model
 	}
 
 	function deleteUsers($id){
-		$query = $this->db->prepare("DELETE FROM users WHERE user_id = :id");
-		$query->execute(array(
-				'id' => $id
-			));
+        $query = $this->db->prepare("SELECT company_image FROM company WHERE user_id = :id");
+        $query->execute(array(
+                'id' => $id
+            ));
+        $cmp_img = $query->fetchAll();  
+        $query = $this->db->prepare("DELETE FROM users WHERE user_id = :id");
+        $query->execute(array(
+                'id' => $id
+            )); 
+        return $cmp_img;
 	}
 }

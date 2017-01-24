@@ -28,14 +28,13 @@ class Dashboard extends Controller
 		$this->view->render('dashboard/pages/adduser',1);
 	}
 
+	function viewUsers(){
+		$this->view->check = $this->listUsers();
+		$this->view->render('dashboard/pages/viewusers',1);
+	}
+
+
 	function createUser(){
-		//if (isset($_POST)) {
-			// code...
-
-		//	$this->model->createUser();
-		//}
-
-		// print_r($_FILES);
 		if (isset($_POST) && !empty($_POST)) {
 			// code...
 			if(isset($_FILES) && !empty($_FILES["fileToUpload"]["name"][0])){
@@ -89,8 +88,13 @@ class Dashboard extends Controller
 	}
 
 	function deleteUsers($id){
-		$this->model->deleteUsers($id);
-		header('location: ../../dashboard');
+		$imgname = $this->model->deleteUsers($id);
+		$store = 'public/images/company-img/'.$imgname[0][0];
+		$temp = str_replace(' ', '', $store);
+	  	unlink($temp);
+
+
+		header('location: ../../dashboard/viewusers');
 	}
 
 	function listUsers(){
