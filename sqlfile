@@ -1,0 +1,1 @@
+SELECT products.product_name, users.user_name, product_category.product_cat_name, user_types.type_name FROM products INNER JOIN users ON products.user_id=users.user_id JOIN product_category ON products.product_cat_id = product_category.product_cat_id JOIN user_types ON user_types.type_id=users.type_id

@@ -95,8 +95,20 @@
                                 </div>
                                 <?php
                                     if (isset($_SESSION['error'])) {
-                                        print_r($_SESSION['error']);
                                         # code...
+                                        echo '<div class="col-md-4 col-md-offset-4">
+                                                <div class="';
+
+                                        if ($_SESSION['error'] == 'Successfully Added') {
+                                                    # code...
+                                            echo 'alert alert-success'; 
+                                        }else{
+                                            echo 'alert alert-danger';
+                                        }        
+                                        echo      '">
+                                                    <strong>'.$_SESSION['error'].'</strong>
+                                                </div>
+                                                </div>'; 
                                         unset($_SESSION['error']);
                                     }
                                 ?>

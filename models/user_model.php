@@ -62,16 +62,36 @@ class User_Model extends Model
         }
 	}
 
-	function listUsers(){
-		$sth = $this->db->query('SELECT * FROM users');
+	function listItems(){
+		$sth = $this->db->prepare('SELECT users.user_id,products.product_name,products.product_id, products.product_price, product_category.product_cat_name, products.product_details ,product_images.image_name FROM products INNER JOIN users ON products.user_id=users.user_id JOIN product_category ON products.product_cat_id = product_category.product_cat_id JOIN product_images ON product_images.product_id = products.product_id WHERE products.user_id = :user_id');
 		$sth->setFetchMode(PDO::FETCH_ASSOC);
-		$sth->execute();
+		$sth->execute(array(
+			':user_id' => $_SESSION['user']
+		));
 		$data = $sth->fetchAll();
 		// return json_encode($data);
 		return $data;
 	}
 
 	function deleteUsers($id){
+		$query = $this->db->prepare("DELETE FROM users WHERE user_id = :id");
+		$query->execute(array(
+				'id' => $id
+			));
+	}
+
+	function userProfile(){
+		$sth = $this->db->prepare('SELECT users.user_name, users.email, users.phone_number, users.address, users.date_added, company.company_name, company.company_address, company.company_phone,company.company_image FROM company JOIN users ON company.user_id = users.user_id WHERE users.user_id = :id');
+		$sth->setFetchMode(PDO::FETCH_ASSOC);
+		$sth->execute(array(
+			':id' => $_SESSION['user']
+		));
+		$data = $sth->fetchAll();
+		// return json_encode($data);
+		return $data;	
+	}
+
+	function deleteItem($id){
 		$query = $this->db->prepare("DELETE FROM users WHERE user_id = :id");
 		$query->execute(array(
 				'id' => $id
