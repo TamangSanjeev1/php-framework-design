@@ -29,6 +29,27 @@ class User extends Controller
 		$this->view->render('dashboard/pages/userprofile',1);
 	}
 
+	function editProfile(){
+		$this->profile = $this->model->userProfile();
+		$this->view->usrProfile = $this->profile;
+		$this->view->render('dashboard/pages/editprofile',1);	
+	}
+
+	function updateProfile($id){
+		if($_POST){
+			if(!empty($_POST['password'])){
+				$this->profile = $this->model->updateProfile($id,$_POST['password']);	
+				header('location: ../userProfile');
+			}else{
+				// print_r($_POST);
+				$this->profile = $this->model->updateProfile($id);	
+				header('location: ../userProfile');
+			}
+		}else{
+			header('location: editProfile');
+		}
+	}
+
 	function additems(){
 		$this->view->render('dashboard/pages/additems',1);
 	}

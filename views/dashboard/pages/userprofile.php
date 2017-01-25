@@ -67,7 +67,7 @@
               </div>
             </div>
                  <div class="panel-footer">
-                       <a href="#" class="btn btn-primary">Edit Profile</a>
+                       <a href="../user/editProfile" class="btn btn-primary">Edit Profile</a>
                     </div>
             
           </div>  

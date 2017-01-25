@@ -91,6 +91,40 @@ class User_Model extends Model
 		return $data;	
 	}
 
+	function updateProfile($id, $psswrd = null){
+		$query = $this->db->prepare("UPDATE company SET company_name = :c_name,company_address= :c_address, company_phone = :c_phone WHERE user_id = :id");
+			$query->execute(array(
+				':c_name' => $_POST['company_name'],
+				':c_address' => $_POST['company_address'],
+				':c_phone' => $_POST['company_phone'],
+				'id' => $id
+			));
+
+		if($psswrd == null){
+			
+			$query = $this->db->prepare("UPDATE users SET user_name = :u_name,email= :u_email, phone_number = :u_phone, address = :u_address WHERE user_id = :id");
+			$query->execute(array(
+				':u_name' => $_POST['fname'],
+				':u_email' => $_POST['email'],
+				':u_phone' => $_POST['number'],
+				':u_address' => $_POST['address'],
+				'id' => $id
+			));
+
+		}else{
+			$query = $this->db->prepare("UPDATE users SET user_name = :u_name,user_password = md5(:password),email= :u_email, phone_number = :u_phone, address = :u_address WHERE user_id = :id");
+			$query->execute(array(
+				':u_name' => $_POST['fname'],
+				':password' => $_POST['password'],
+				':u_email' => $_POST['email'],
+				':u_phone' => $_POST['number'],
+				':u_address' => $_POST['address'],
+				'id' => $id
+			));
+		}
+	}
+
+
 	function deleteItem($id){
 		$query = $this->db->prepare("DELETE FROM users WHERE user_id = :id");
 		$query->execute(array(
