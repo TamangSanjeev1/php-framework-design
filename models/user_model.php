@@ -63,7 +63,7 @@ class User_Model extends Model
 	}
 
 	function listItems(){
-		$sth = $this->db->prepare('SELECT users.user_id,products.product_name,products.product_id, products.product_price, product_category.product_cat_name, products.product_details ,product_images.image_name FROM products INNER JOIN users ON products.user_id=users.user_id JOIN product_category ON products.product_cat_id = product_category.product_cat_id JOIN product_images ON product_images.product_id = products.product_id WHERE products.user_id = :user_id');
+		$sth = $this->db->prepare('SELECT users.user_id,products.product_name,products.product_id,products.product_quantity, products.product_price, product_category.product_cat_name, products.product_details ,product_images.image_name FROM products INNER JOIN users ON products.user_id=users.user_id JOIN product_category ON products.product_cat_id = product_category.product_cat_id JOIN product_images ON product_images.product_id = products.product_id WHERE products.user_id = :user_id');
 		$sth->setFetchMode(PDO::FETCH_ASSOC);
 		$sth->execute(array(
 			':user_id' => $_SESSION['user']
@@ -73,7 +73,40 @@ class User_Model extends Model
 		return $data;
 	}
 
-	function deleteUsers($id){
+
+	function listItem($id){
+		$sth = $this->db->prepare('SELECT * FROM products WHERE product_id = :product_id');
+		$sth->setFetchMode(PDO::FETCH_ASSOC);
+		$sth->execute(array(
+			':product_id' => $id
+		));
+		$data = $sth->fetchAll();
+		// return json_encode($data);
+		return $data;
+	}
+
+	function updateProduct($id){
+		$query = $this->db->prepare("UPDATE products SET product_name = :p_name,product_quantity= :p_quantity, product_price = :p_price, product_details = :p_details, product_brand = :p_brand WHERE product_id = :id");
+			$query->execute(array(
+				':p_name' => $_POST['product_name'],
+				':p_quantity' => $_POST['quantity'],
+				':p_price' => $_POST['price'],
+				':p_details' => $_POST['detail'],
+				':p_brand' => $_POST['brand'],
+				'id' => $id
+			));
+		
+	}
+
+	function itemType(){
+		$sth = $this->db->prepare('SELECT * FROM product_category');
+		$sth->execute();
+		$category = $sth->fetchAll();
+
+		return $category;
+	}
+
+	function deleteUsers($id){ 
 		$query = $this->db->prepare("DELETE FROM users WHERE user_id = :id");
 		$query->execute(array(
 				'id' => $id
@@ -125,10 +158,18 @@ class User_Model extends Model
 	}
 
 
-	function deleteItem($id){
-		$query = $this->db->prepare("DELETE FROM users WHERE user_id = :id");
-		$query->execute(array(
-				'id' => $id
-			));
-	}
+	// function deleteItem($id){
+	// 	$query = $this->db->prepare("SELECT image_name FROM product_images WHERE product_id = :id");
+ //        $query->execute(array(
+ //                'id' => $id
+ //            ));
+ //        $cmp_img = $query->fetchAll(); 
+
+	// 	$query = $this->db->prepare("DELETE FROM products WHERE product_id = :id");
+	// 	$query->execute(array(
+	// 			'id' => $id
+	// 		));
+
+	// 	return $cmp_img;
+	// }
 }

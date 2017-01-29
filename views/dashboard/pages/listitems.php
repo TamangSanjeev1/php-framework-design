@@ -18,11 +18,11 @@
                     <ul class="nav nav-tabs">
                         <?php 
                             $data = $this->itemList;
+                           
                                 // print_r(sizeof($data));
                                 // print_r($this->itemList);
                             // $size = sizeof($data);
-                            // $category = $this->itemList[0]['product_cat_name'];
-                            
+                            // $category = $this->itemList[0]['product_cat_name'];                            
                         ?>
                        
                     </ul>
@@ -37,8 +37,28 @@
                              
                                 <img src="<?php echo URL; ?>public/images/product-details/<?php echo $value['image_name']; ?>" alt="Nature" style="width:100%">
                                 <div class="caption">
-                                  <p><?php echo $value['product_details']; ?></p>
-                                  <a href="delete/<?php echo $value['product_id']; ?>"><button type="button" class="btn btn-danger">Delete</button></a>
+                                  <b>Details</b><p><?php echo $value['product_details']; ?></p>
+                                 
+                                    <table class="table">
+                                        <thead>
+                                          <tr>
+                                            <th>Name</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr>
+                                            <td><?php echo $value['product_name']; ?></td>
+                                            <td><?php echo $value['product_quantity']; ?></td>
+                                            <td><?php echo $value['product_price']; ?></td>
+                                          </tr> 
+                                        </tbody>     
+                                    </table>    
+                                 <a href="<?php echo URL; ?>user/deleteItem/<?php echo $value['product_id']; ?>">
+                                  <button type="button" class="btn btn-danger">Delete</button></a>
+                                  <a href="<?php echo URL; ?>user/editProduct/<?php echo $value['product_id']; ?>">
+                                  <button type="button" class="btn btn-primary">Edit</button></a>
                                 </div>
                              
                             </div>
@@ -47,12 +67,10 @@
 
                     </div>
                     </div>
-                
-                        <!-- /.panel-body -->
+                        
             </div>
                     <!-- /.panel -->
         </div>
     </div>
 </div>
-
 

@@ -113,9 +113,41 @@ class User extends Controller
 		header('location: ../../dashboard');
 	}
 
+	// function deleteItem($id){
+	// 	$imgname = $this->model->deleteItem($id);
+	// 	// print_r($imgname);
+	// 	$store = 'ublic/images/product-details/'.$imgname[0][0];
+	// 	$temp = str_replace(' ', '', $store);
+	//   	unlink($temp);
+
+
+	// 	header('location: ../user/listitems');
+	// }
+
+	function editProduct($id){
+		$this->list = $this->model->itemType();
+		$this->view->types = $this->list;
+		$this->list = $this->model->listItem($id);
+		$this->view->itemList = $this->list;
+		$this->view->render('dashboard/pages/editproduct',1);
+	}
+
+	function updateProduct($id){
+		if($_POST){			
+			$this->model->updateProduct($id);	
+			header('location: ../listItems');
+		}else{
+			header('location: ../listItems');
+		}
+				// print_r($_POST);
+				// $this->profile = $this->model->updateProfile($id);	
+	}
+
 	function listItems(){
 		$this->list = $this->model->listItems();
 		$this->view->itemList = $this->list;
+		// $this->cat = $this->model->itemType();
+		// $this->view->category = $this->cat;
 		$this->view->render('dashboard/pages/listitems',1);
 	}
 
