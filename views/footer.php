@@ -1,4 +1,7 @@
-	<script src="<?php echo URL; ?>public/js/jquery.js"></script>
+	<script src="<?php echo URL; ?>public/datatable/js/dataTables.bootstrap.min.js"></script>
+    <script src="<?php echo URL; ?>public/datatable/js/jquery.dataTables.min.js"></script>
+
+    <script src="<?php echo URL; ?>public/js/jquery.js"></script>
 	<script src="<?php echo URL; ?>public/js/price-range.js"></script>
     <script src="<?php echo URL; ?>public/js/jquery.scrollUp.min.js"></script>
 	<script src="<?php echo URL; ?>public/js/bootstrap.min.js"></script>

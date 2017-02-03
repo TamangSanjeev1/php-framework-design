@@ -1,7 +1,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Add Products</h1>
+                    <h1 class="page-header">Edit Products</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -11,33 +11,36 @@
                                             <!-- /.panel-heading -->
                     <!-- /.panel -->
                     <div class="panel panel-default">
+                   <!--  <?php
+                        // print_r($this->itemList);
+                    ?> -->
                         <div class="panel-heading">
-                            <i class="fa fa-users fa-fw"></i> Add Items
+                            <i class="fa fa-users fa-fw"></i> Edit Items
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <form action="../user/storeItem" method="post" enctype="multipart/form-data">
+                            <form action="<?php echo URL; ?>user/updateProduct/<?php echo $this->itemList[0]['product_id']; ?>" method="post" enctype="multipart/form-data">
                                 
                         
                                 <div class="form-group">
                                     <label for="Product Name">
                                         Product Name
                                     </label>
-                                        <input type="text" name="product_name" class="form-control" placeholder="product name" required>
+                                        <input type="text" name="product_name" class="form-control" value="<?php echo $this->itemList[0]['product_name']; ?>" required>
                                 </div>                                                                    
 
                                 <div class="form-group">
                                     <label for="Quantity">
                                         Quantity
                                     </label>
-                                        <input type="text" name="quantity" class="form-control" placeholder="quantity" required>
+                                        <input type="text" name="quantity" class="form-control" value="<?php echo $this->itemList[0]['product_quantity']; ?>" required>
                                 </div>
                                 
                                     <div class="form-group">
                                         <label for="price">
                                             Price
                                         </label>
-                                            <input type="text" name="price" class="form-control" placeholder="price" required>
+                                            <input type="text" name="price" class="form-control" value="<?php echo $this->itemList[0]['product_price']; ?>" required>
                                     </div>
                                         
                                 
@@ -45,7 +48,7 @@
                                         <label for="phonenumber">
                                             Product Detail
                                         </label>
-                                            <textarea type="text" name="detail" class="form-control" placeholder="Details" required></textarea>
+                                            <input type="text" name="detail" class="form-control" value="<?php echo $this->itemList[0]['product_details']; ?>" required></textarea>
                                     </div>
 
 
@@ -53,15 +56,15 @@
                                         <label for="phonenumber">
                                             brand
                                         </label>
-                                            <input type="text" name="brand" class="form-control" placeholder="brand" required>
+                                            <input type="text" name="brand" class="form-control" value="<?php echo $this->itemList[0]['product_brand']; ?>" required>
                                     </div>
 
-                                    <div class="form-group">
+                                   <!--  <div class="form-group">
                                         <label for="image_upload">
                                             image upload
                                         </label>
                                             <input id="file-0a" class="file" type="file" name="fileToUpload[]" multiple>
-                                    </div>
+                                    </div> -->
 
 
                                     <div class="form-group">
@@ -74,11 +77,18 @@
                                             <option value="">
                                                 --Select category--
                                             </option>
-                                            
-                                            <option value="Np">
-                                                Shirt
+                                             <?php
+                                                foreach ($this->types as $value) {
+                                                    # code...
+                                                    
+                                            ?>    
+                                            <option value="<?php echo $value['product_cat_name']; ?>">
+                                                <?php echo $value['product_cat_name']; ?>
                                             </option>
-                                            <option value="Ch">
+                                            <?php }
+                                                
+                                             ?>
+                                            <!-- <option value="Ch">
                                                 Pant
                                             </option>
                                             <option value="Bang">
@@ -86,7 +96,7 @@
                                             </option>
                                             <option value="USA">
                                                 Trousers
-                                            </option>
+                                            </option> -->
                                         </select>
                                     </div>
 
@@ -118,6 +128,8 @@
                             <!-- /.row -->
                 </div>
                         <!-- /.panel-body -->
+
+                       
             </div>
                     <!-- /.panel -->
         </div>

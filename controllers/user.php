@@ -29,6 +29,27 @@ class User extends Controller
 		$this->view->render('dashboard/pages/userprofile',1);
 	}
 
+	function editProfile(){
+		$this->profile = $this->model->userProfile();
+		$this->view->usrProfile = $this->profile;
+		$this->view->render('dashboard/pages/editprofile',1);	
+	}
+
+	function updateProfile($id){
+		if($_POST){
+			if(!empty($_POST['password'])){
+				$this->profile = $this->model->updateProfile($id,$_POST['password']);	
+				header('location: ../userProfile');
+			}else{
+				// print_r($_POST);
+				$this->profile = $this->model->updateProfile($id);	
+				header('location: ../userProfile');
+			}
+		}else{
+			header('location: editProfile');
+		}
+	}
+
 	function additems(){
 		$this->view->render('dashboard/pages/additems',1);
 	}
@@ -87,14 +108,56 @@ class User extends Controller
 		}
 	}
 
-	function deleteUsers($id){
-		$this->model->deleteUsers($id);
-		header('location: ../../dashboard');
+	// function deleteUsers($id){
+	// 	$this->model->deleteUsers($id);
+	// 	header('location: ../../dashboard');
+	// }
+
+	function deleteItem($id){
+		$imgname = $this->model->deleteItem($id);
+		// print_r($imgname);
+		$i = 0;
+		foreach ($imgname as $value) {
+			# code...
+			$store[] = 'public/images/product-details/'.$imgname[$i][0];
+			$temp[] = str_replace(' ', '', $store[$i]);
+			$i++;
+		}
+		// print_r($store);
+		foreach ($temp as $value) {
+			# code...
+	  		unlink($value);
+		}
+
+
+		header('location: ../../user/listitems');
+
+	}
+
+	function editProduct($id){
+		$this->list = $this->model->itemType();
+		$this->view->types = $this->list;
+		$this->list = $this->model->listItem($id);
+		$this->view->itemList = $this->list;
+		$this->view->render('dashboard/pages/editproduct',1);
+	}
+
+	function updateProduct($id){
+		if($_POST){			
+			$this->model->updateProduct($id);	
+			header('location: ../listItems');
+		}else{
+			header('location: ../listItems');
+		}
+				// print_r($_POST);
+				// $this->profile = $this->model->updateProfile($id);	
 	}
 
 	function listItems(){
 		$this->list = $this->model->listItems();
 		$this->view->itemList = $this->list;
+		// $this->cat = $this->model->itemType();
+		// $this->view->category = $this->cat;
 		$this->view->render('dashboard/pages/listitems',1);
 	}
 

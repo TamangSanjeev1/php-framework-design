@@ -16,6 +16,10 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo URL; ?>public/css/main.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo URL; ?>public/css/responsive.css">
 
+    <!--Data Table-->
+     <link rel="stylesheet" type="text/css" href="<?php echo URL; ?>public/datatable/css/dataTables.bootstrap.min.css">
+
+
     <!--User defined for login panel-->
         <link rel="stylesheet" type="text/css" href="<?php echo URL; ?>public/css/style.css">    
     <!--forloginpanel-->    

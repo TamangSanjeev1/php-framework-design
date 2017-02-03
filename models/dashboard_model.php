@@ -73,6 +73,9 @@ class Dashboard_Model extends Model
 		return $data;
 	}
 
+    /*
+    * The deleting of image of the products with remained of the company_image
+    */
 	function deleteUsers($id){
         $query = $this->db->prepare("SELECT company_image FROM company WHERE user_id = :id");
         $query->execute(array(
