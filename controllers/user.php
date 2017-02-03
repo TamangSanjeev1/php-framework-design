@@ -108,21 +108,31 @@ class User extends Controller
 		}
 	}
 
-	function deleteUsers($id){
-		$this->model->deleteUsers($id);
-		header('location: ../../dashboard');
-	}
-
-	// function deleteItem($id){
-	// 	$imgname = $this->model->deleteItem($id);
-	// 	// print_r($imgname);
-	// 	$store = 'ublic/images/product-details/'.$imgname[0][0];
-	// 	$temp = str_replace(' ', '', $store);
-	//   	unlink($temp);
-
-
-	// 	header('location: ../user/listitems');
+	// function deleteUsers($id){
+	// 	$this->model->deleteUsers($id);
+	// 	header('location: ../../dashboard');
 	// }
+
+	function deleteItem($id){
+		$imgname = $this->model->deleteItem($id);
+		// print_r($imgname);
+		$i = 0;
+		foreach ($imgname as $value) {
+			# code...
+			$store[] = 'public/images/product-details/'.$imgname[$i][0];
+			$temp[] = str_replace(' ', '', $store[$i]);
+			$i++;
+		}
+		// print_r($store);
+		foreach ($temp as $value) {
+			# code...
+	  		unlink($value);
+		}
+
+
+		header('location: ../../user/listitems');
+
+	}
 
 	function editProduct($id){
 		$this->list = $this->model->itemType();
