@@ -40,7 +40,7 @@
                                                     <th>Phone Number</th>
                                                     <th>Address</th>
                                                     <th>Date Added</th>
-                                                    <th>Delete</th>
+                                                    <th>Edit</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -71,6 +71,8 @@
                                             ?>
                                                     <th>
                                                     <a href="<?php echo URL; ?>dashboard/deleteUsers/<?php echo $data[$i]['user_id']; ?>"><button class="btn btn-danger"><span class="fa fa-times-circle fa-1x"></span></button>
+                                                    </a>
+                                                    <a href="<?php echo URL; ?>dashboard/editUsers/<?php echo $data[$i]['user_id']; ?>"><button class="btn btn-success"><span class="fa fa-pencil-square-o"></span></button>
                                                     </a>
                                             <?php
                                                             

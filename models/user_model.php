@@ -157,8 +157,60 @@ class User_Model extends Model
 		}
 	}
 
+	function updateCompImage($id){
+		$query = $this->db->prepare("SELECT company_image FROM company WHERE user_id = :id");
+        $query->execute(array(
+                ':id' => $id
+            ));
+        $cmp_img = $query->fetchAll(); 
 
-	function deleteItem($id){
+        $query = $this->db->prepare("UPDATE company SET company_image = :c_img WHERE user_id = :id");
+       
+
+        if (MassUpload::$uploadOk == 0) {
+            $_SESSION['error'] = "Sorry, your file was not uploaded.";
+            exit;
+        // if everything is ok, try to Massupload file
+        } else {
+            // print_r(MassUpload::$files["fileToUpload"]["name"]);
+            $size = sizeof(MassUpload::$files["fileToUpload"]["name"]);
+            for ($i=0; $i < sizeof(MassUpload::$files["fileToUpload"]["name"]) ; $i++) { 
+                # code...
+                MassUpload::$image[$i] = str_replace(' ','',basename(MassUpload::$files["fileToUpload"]["name"][$i]));
+            }
+
+            $count = 0;
+            foreach (MassUpload::$image as $value) {
+                # code...
+                // print_r($value);
+
+                if( $query->execute(array(
+        		':c_img' => $_FILES["fileToUpload"]["name"][0],
+                'id' => $id
+            ))){        
+                    if (move_uploaded_file(MassUpload::$files["fileToUpload"]["tmp_name"][$count], MassUpload::$target_file[$count])) {
+                        // echo "The files ". basename( MassUpload::$files["fileToUpload"]["name"][$count]). " has been Massuploaded.";
+
+                        if ($count === $size) {
+                            # code...
+                            return true;
+                        }
+
+                        $count++;
+                        
+                    } else {
+                    	$_SESSION['error'] = "Sorry, there was an error uploading your file.";
+                    }    
+                }else{
+                    $_SESSION['error'] =  "Failed to Massupload";
+                }
+            }            
+        }
+        
+        return $cmp_img;
+	}
+
+	function dereturnleteItem($id){
 		$query = $this->db->prepare("SELECT image_name FROM product_images WHERE product_id = :id");
         $query->execute(array(
                 'id' => $id

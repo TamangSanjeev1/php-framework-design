@@ -73,6 +73,42 @@ class Dashboard_Model extends Model
 		return $data;
 	}
 
+    function userData($id){
+        $sth = $this->db->prepare('SELECT * FROM users WHERE user_id = :id');
+        $sth->setFetchMode(PDO::FETCH_ASSOC);
+        $sth->execute(array(
+                'id' => $id
+            ));
+        $data = $sth->fetchAll();
+        // return json_encode($data);
+        return $data;
+    }
+
+    function updateUser($id, $psswrd = null){
+        if($psswrd == null){
+            
+            $query = $this->db->prepare("UPDATE users SET user_name = :u_name,email= :u_email, phone_number = :u_phone, address = :u_address WHERE user_id = :id");
+            $query->execute(array(
+                ':u_name' => $_POST['fname'],
+                ':u_email' => $_POST['email'],
+                ':u_phone' => $_POST['number'],
+                ':u_address' => $_POST['address'],
+                'id' => $id
+            ));
+
+        }else{
+            $query = $this->db->prepare("UPDATE users SET user_name = :u_name,user_password = md5(:password),email= :u_email, phone_number = :u_phone, address = :u_address WHERE user_id = :id");
+            $query->execute(array(
+                ':u_name' => $_POST['fname'],
+                ':password' => $_POST['password'],
+                ':u_email' => $_POST['email'],
+                ':u_phone' => $_POST['number'],
+                ':u_address' => $_POST['address'],
+                'id' => $id
+            ));
+        }
+    }
+
     /*
     * The deleting of image of the products with remained of the company_image
     */
