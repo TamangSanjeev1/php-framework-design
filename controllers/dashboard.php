@@ -33,6 +33,26 @@ class Dashboard extends Controller
 		$this->view->render('dashboard/pages/viewusers',1);
 	}
 
+	function editUsers($id){
+		$this->view->check = $this->model->userData($id);
+		$this->view->render('dashboard/pages/edituser',1);
+	}
+
+	function updateUser($id){
+		if($_POST){
+			if(!empty($_POST['password'])){
+				$this->profile = $this->model->updateUser($id,$_POST['password']);	
+				header('location: ../viewusers');
+			}else{
+				// print_r($_POST);
+				$this->profile = $this->model->updateUser($id);	
+				header('location: ../viewusers');
+			}
+		}else{
+			header('location: viewUsers');
+		}
+	}
+
 
 	function createUser(){
 		if (isset($_POST) && !empty($_POST)) {

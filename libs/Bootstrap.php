@@ -51,8 +51,12 @@
 		}else{
 			require 'controllers/index.php';
 			$controller = new Index();
+			try{
+				$controller->loadModel('index');	
+			}catch(Error $e){
+
+			}
 			$controller->index();
-			exit;
 		}
  	}
 
