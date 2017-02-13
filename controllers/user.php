@@ -197,9 +197,7 @@ class User extends Controller
 	  		unlink($value);
 		}
 
-
 		header('location: ../../user/listitems');
-
 	}
 
 	function editProduct($id){
@@ -227,6 +225,34 @@ class User extends Controller
 		// $this->cat = $this->model->itemType();
 		// $this->view->category = $this->cat;
 		$this->view->render('dashboard/pages/listitems',1);
+	}
+
+	function featuredItems($id){
+		$this->list = $this->model->featuredItems($id);
+		if ($this->list === 0 || $this->list != '') {
+			# code...
+			$_SESSION['error'] = "You already have added this item";
+			header('location: ../listItems');	
+		}elseif($this->list >= 5){
+			$_SESSION['error'] = "The maximum size is six";
+			header('location: ../listItems');
+		}else{
+			$_SESSION['error'] = "Successfully Added";	
+			header('location: ../listItems');
+		}
+	}
+
+	function featuredItemsList(){
+		$this->featuredproducts = $this->model->getFeaturedItems();
+		$this->view->itemList = $this->featuredproducts; 
+		// print_r($this->view->itemList);
+		$this->view->render('dashboard/pages/listfeatureditems',1);
+	}
+
+
+	function deleteFeaturedItem($id){
+		$this->featuredproducts = $this->model->deleteFeaturedItem($id);
+		header('location: ../featuredItemsList');
 	}
 
 	function logout(){

@@ -210,7 +210,55 @@ class User_Model extends Model
         return $cmp_img;
 	}
 
-	function dereturnleteItem($id){
+	function featuredItems($id){
+		$query = $this->db->prepare("SELECT * FROM featured_products WHERE user_id = :user_id");
+		$query->execute(array(
+			':user_id' => $_SESSION['user']
+		));
+		// $data = $query->fetchAll();
+		$count = $query->rowCount();
+		if ($count >= 6) {
+			# code...
+			return $count;
+		}else{
+			$query = $this->db->prepare("SELECT product_id FROM featured_products WHERE product_id = :product_id");
+			$query->execute(array(
+				':product_id' => $id 
+			));
+
+			$store = $query->fetchAll();
+			// $this->temp = $store[0][1];
+			$count = $query->rowCount();
+
+			if($count > 0){
+				return 0;
+			}else{
+				$query = $this->db->prepare("INSERT INTO featured_products(product_id,user_id) VALUES (:id,:user_id)");
+				$query->execute(array(
+					':id' => $id,
+					':user_id' => $_SESSION['user']
+				));
+			}
+		}
+	}
+
+	function getFeaturedItems(){
+		$query = $this->db->prepare("SELECT featured_products.product_id,products.product_details, products.product_price, products.product_quantity, products.product_name, product_images.image_name FROM featured_products INNER JOIN products ON products.product_id = featured_products.product_id JOIN product_images ON product_images.product_id = products.product_id  WHERE featured_products.user_id = :user_id");
+		$query->execute(array(
+			':user_id' => $_SESSION['user']
+		));
+		$data = $query->fetchAll();
+		return $data;
+	}
+
+	function deleteFeaturedItem($id){
+		$query = $this->db->prepare("DELETE FROM featured_products WHERE product_id = :id");
+		$query->execute(array(
+				'id' => $id
+			));
+	}
+
+	function deleteItem($id){
 		$query = $this->db->prepare("SELECT image_name FROM product_images WHERE product_id = :id");
         $query->execute(array(
                 'id' => $id
