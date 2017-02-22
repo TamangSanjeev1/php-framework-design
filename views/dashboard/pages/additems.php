@@ -75,10 +75,17 @@
                                                 --Select category--
                                             </option>
                                             
-                                            <option value="Np">
-                                                Shirt
+                                            <?php
+                                            
+                                                foreach ($this->types as $value) {
+                                                    # code...
+                                                
+                                            ?>
+                                            <option value="<?php echo $value['product_cat_name']; ?>">
+                                                <?php echo $value['product_cat_name']; ?>
                                             </option>
-                                            <option value="Ch">
+                                            <?php } ?>
+                                           <!--  <option value="Ch">
                                                 Pant
                                             </option>
                                             <option value="Bang">
@@ -86,7 +93,7 @@
                                             </option>
                                             <option value="USA">
                                                 Trousers
-                                            </option>
+                                            </option> -->
                                         </select>
                                     </div>
 

@@ -11,11 +11,15 @@ class User_Model extends Model
 	}
 
 	public function storeItem(){	
+		$listno = $this->db->prepare("SELECT product_cat_id FROM product_category WHERE product_cat_name = :cat_name");
+		$listno->execute(array(':cat_name' => $_POST['category']));	
+		$cat_no = $listno->fetchAll();	
+
 		$query = $this->db->prepare("INSERT INTO products(product_name, product_quantity, product_price, product_details, product_brand, user_id, product_cat_id) VALUES (:product_name,:product_quantity,:product_price,:product_details,:product_brand,:user_id,:product_cat)");
 		$pr_name = $_POST['product_name'];
 		$pr_qntity = $_POST['quantity'];
 
-		$query->execute(array(':product_name' => $pr_name, ':product_quantity' => $pr_qntity, ':product_price' => $_POST['price'],':product_details' => $_POST['detail'], ':product_brand' => $_POST['brand'], ':user_id' => $_SESSION['user'], ':product_cat' => '1'));	
+		$query->execute(array(':product_name' => $pr_name, ':product_quantity' => $pr_qntity, ':product_price' => $_POST['price'],':product_details' => $_POST['detail'], ':product_brand' => $_POST['brand'], ':user_id' => $_SESSION['user'], ':product_cat' => $cat_no[0][0]));	
 
 		$sth = $this->db->prepare("SELECT `product_id` FROM products ORDER BY `product_id` DESC LIMIT 1");
 		$sth->execute(); 
@@ -212,6 +216,7 @@ class User_Model extends Model
 
 	function featuredItems($id){
 		$query = $this->db->prepare("SELECT * FROM featured_products WHERE user_id = :user_id");
+
 		$query->execute(array(
 			':user_id' => $_SESSION['user']
 		));
@@ -271,5 +276,25 @@ class User_Model extends Model
 			));
 
 		return $cmp_img;
+	}
+
+	function deleteProductType($id){
+		$query = $this->db->prepare("DELETE FROM product_category WHERE product_cat_id = :id");
+		$query->execute(array(
+			':id' => $id));	
+	}
+
+	function addproducttype(){
+		$query = $this->db->prepare("INSERT INTO product_category(product_cat_name) VALUES (:product_cat_name)");
+		$query->execute(array(':product_cat_name' => $_POST['product_cat']));	
+	}
+	
+	function productTypeList(){
+		$query = $this->db->prepare("SELECT * FROM product_category");
+		$query->execute();
+
+		$product_type = $query->fetchAll();
+
+		return $product_type;	
 	}
 }

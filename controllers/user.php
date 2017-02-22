@@ -119,6 +119,8 @@ class User extends Controller
 	}
 
 	function additems(){
+		$this->itemType = $this->model->itemType();
+		$this->view->types = $this->itemType;
 		$this->view->render('dashboard/pages/additems',1);
 	}
 
@@ -253,6 +255,23 @@ class User extends Controller
 	function deleteFeaturedItem($id){
 		$this->featuredproducts = $this->model->deleteFeaturedItem($id);
 		header('location: ../featuredItemsList');
+	}
+
+	function producttype(){
+		$this->view->typeList = $this->model->productTypeList();
+
+		$this->view->render('dashboard/pages/productType',1);
+	}
+
+	function addproducttype(){
+		$this->model->addproducttype();
+
+		header('location: producttype');
+	}
+
+	function deleteProductType($id){
+		$this->model->deleteProductType($id);
+		header('location: ../producttype');
 	}
 
 	function logout(){
