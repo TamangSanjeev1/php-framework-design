@@ -90,13 +90,18 @@ class User_Model extends Model
 	}
 
 	function updateProduct($id){
-		$query = $this->db->prepare("UPDATE products SET product_name = :p_name,product_quantity= :p_quantity, product_price = :p_price, product_details = :p_details, product_brand = :p_brand WHERE product_id = :id");
+		$listno = $this->db->prepare("SELECT product_cat_id FROM product_category WHERE product_cat_name = :cat_name");
+		$listno->execute(array(':cat_name' => $_POST['category']));	
+		$cat_no = $listno->fetchAll();	
+
+		$query = $this->db->prepare("UPDATE products SET product_name = :p_name,product_quantity= :p_quantity, product_price = :p_price, product_details = :p_details, product_brand = :p_brand, product_cat_id = :product_cat WHERE product_id = :id");
 			$query->execute(array(
 				':p_name' => $_POST['product_name'],
 				':p_quantity' => $_POST['quantity'],
 				':p_price' => $_POST['price'],
 				':p_details' => $_POST['detail'],
 				':p_brand' => $_POST['brand'],
+				':product_cat' => $cat_no[0][0],
 				'id' => $id
 			));
 		
