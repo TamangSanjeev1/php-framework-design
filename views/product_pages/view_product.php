@@ -16,18 +16,24 @@
 						<div class="col-sm-7">
 							<div class="product-information"><!--/product-information-->
 								
-								<h2><?php echo $this->product_info[0]['product_details']; ?></h2>
+									<form action="<?php echo URL; ?>order/addtocart/<?php echo $this->product_info[0]['product_id']; ?>" method="POST">
+									<input type="hidden" name="hidden_image" value="<?php echo $this->product_info[0]['image_name']; ?>" />
+								<h2><?php echo $this->product_info[0]['product_name']; ?></h2>
+								<input type="hidden" name="hidden_name" value="<?php echo $this->product_info[0]['product_name']; ?>" />
 								<!-- <p>Web ID: 1089772</p> -->
 								<img src="" alt="" />
 								<span>
 									<span>NPR <?php echo $this->product_info[0]['product_price']; ?></span>
+                               <input type="hidden" name="hidden_price" value="<?php echo $this->product_info[0]['product_price']; ?>" />
 									<label>Quantity:</label>
-									<input type="text" value="0" />
-									<button type="button" class="btn btn-fefault cart">
+									<input name="order_quantity" type="number" value="0" min="1" max="<?php echo $this->product_info[0]['product_quantity']; ?>" />
+									
+									<button name="submit" class="btn btn-fefault cart">
 										<i class="fa fa-shopping-cart"></i>
 										Add to cart
 									</button>
 								</span>
+									</form>
 								<p><b>Availability:</b> <?php echo $this->product_info[0]['product_quantity']; ?></p>
 								<p><b>Brand:</b> <?php echo $this->product_info[0]['product_brand']; ?></p>
 								<p><b>Product Details:</b> <?php echo $this->product_info[0]['product_details']; ?></p>

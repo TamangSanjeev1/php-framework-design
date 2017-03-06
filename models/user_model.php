@@ -10,6 +10,15 @@ class User_Model extends Model
 		parent::__construct();
 	}
 
+	function getStockNotification(){
+        $query = $this->db->prepare("SELECT product_id, product_name, product_quantity FROM products WHERE product_quantity = 0 AND user_id = :id");
+        $query->execute(array(
+                ':id' => $_SESSION['user'] 
+            ));
+        $notice = $query->fetchAll();
+        return $notice;
+    }
+    
 	public function storeItem(){	
 		$listno = $this->db->prepare("SELECT product_cat_id FROM product_category WHERE product_cat_name = :cat_name");
 		$listno->execute(array(':cat_name' => $_POST['category']));	

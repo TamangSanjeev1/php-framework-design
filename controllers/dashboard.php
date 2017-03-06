@@ -5,7 +5,6 @@
 */
 class Dashboard extends Controller
 {
-	
 	function __construct()
 	{
 		# code...
@@ -17,9 +16,13 @@ class Dashboard extends Controller
 			header('Location: login');
 			exit;
 		}
+
 	}
 
 	function index(){
+		$notice = $this->model->getStockNotification();
+		// $this->view->notify = $notice;
+		$_SESSION['notify'] = $notice; 
 		$this->view->check = $this->listUsers();
 		$this->view->render('dashboard/index',1);
 	}

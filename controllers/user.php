@@ -20,6 +20,8 @@ class User extends Controller
 	}
 
 	function index(){
+		$notice = $this->model->getStockNotification();
+		$_SESSION['notify'] = $notice; 
 		$this->view->render('dashboard/user',1);
 	}
 
@@ -121,6 +123,8 @@ class User extends Controller
 	function additems(){
 		$this->itemType = $this->model->itemType();
 		$this->view->types = $this->itemType;
+		$notice = $this->model->getStockNotification();
+		$_SESSION['notify'] = $notice; 
 		$this->view->render('dashboard/pages/additems',1);
 	}
 
@@ -163,6 +167,9 @@ class User extends Controller
 									$this->model->storeItem();
 									# code...
 									$_SESSION['error'] = 'Successfully Added';
+
+									$notice = $this->model->getStockNotification();
+									$_SESSION['notify'] = $notice; 
 									header('location: additems');
 								// $temp = MassUpload::checkErrors("galleries");
 								// $errors = $temp;
@@ -199,6 +206,9 @@ class User extends Controller
 	  		unlink($value);
 		}
 
+		
+		$notice = $this->model->getStockNotification();
+		$_SESSION['notify'] = $notice; 
 		header('location: ../../user/listitems');
 	}
 
@@ -212,7 +222,9 @@ class User extends Controller
 
 	function updateProduct($id){
 		if($_POST){			
-			$this->model->updateProduct($id);	
+			$this->model->updateProduct($id);
+			$notice = $this->model->getStockNotification();
+			$_SESSION['notify'] = $notice; 	
 			header('location: ../listItems');
 		}else{
 			header('location: ../listItems');

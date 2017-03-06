@@ -10,6 +10,15 @@ class Dashboard_Model extends Model
 		parent::__construct();
 	}
 
+    function getStockNotification(){
+        $query = $this->db->prepare("SELECT product_id, product_name, product_quantity FROM products WHERE product_quantity = 0 AND user_id = :id");
+        $query->execute(array(
+                ':id' => $_SESSION['user'] 
+            ));
+        $notice = $query->fetchAll();
+        return $notice;
+    }
+
 	public function createUser(){
 		$type = 2;
 		$time = date('Y-M-d');

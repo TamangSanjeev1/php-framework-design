@@ -176,55 +176,47 @@
                 </li>
                 <!-- /.dropdown -->
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-bell-o"></i>
+                      <?php 
+                            if(sizeof($_SESSION['notify']) > 0){
+                                ?>
+                      <span class="label label-danger">
+                            <?php
+                                echo sizeof($_SESSION['notify']);
+                            }
+
+                      ?></span>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
+                    <?php 
+                        if($_SESSION['notify'] > 0){
+                            foreach ($_SESSION['notify'] as $value) {
+                                # code...
+                    ?>
                         <li>
-                            <a href="#">
+                            <a href="">
                                 <div>
-                                    <i class="fa fa-comment fa-fw"></i> New Comment
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                    <i class="fa fa-comment fa-fw"></i> <?php echo 'The stock of '.$value['product_name'].' is 0' ?>
                                 </div>
                             </a>
                         </li>
                         <li class="divider"></li>
+                    <?php       }
+                        }else{
+
+                             ?>
+
                         <li>
                             <a href="#">
                                 <div>
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span class="pull-right text-muted small">12 minutes ago</span>
+                                    <i class="fa fa-comment fa-fw"></i>No Notification
                                 </div>
                             </a>
                         </li>
                         <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-tasks fa-fw"></i> New Task
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
+                    <?php } ?>
+                            
                         <li>
                             <a class="text-center" href="#">
                                 <strong>See All Alerts</strong>
