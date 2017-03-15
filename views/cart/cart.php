@@ -58,15 +58,52 @@
                           <tr>  
                                <td colspan="3" align="right">Total</td>  
                                <td align="right"><p class="cart_total_price">$ <?php echo number_format($total, 2); ?></p></td>  
-                               <td></td>  
                           </tr>  
+
+                          <tr>
+                          	<td>
+                          	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editDept"><i
+                                                class="fa fa-crosshairs"></i> Checkout</button></td>
+                          </tr>
+
                           <?php  
                           }  
                           ?>  
-
 					
 					</tbody>
 				</table>
+
+				<div class="modal fade" id="editDept" tabindex="-1" role="dialog" aria-labelledby="editDeptModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="background-color: rgb(255,63,0)">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="editDeptModalLabel" style="color: white;">Payment Method</h4>
+                                            </div>
+                                            <div class="modal-body form-group">
+                                                <form method="POST" commandName="department" action="<?php echo URL; ?>order/checkout">
+                                                    <select name="payment" id="userID" size="1">
+													    <option>Cash On Delivery</option>
+													    <option>Paypal</option>
+													  </select>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-default">Submit</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
 			</div>
 		</div>
 	</section> <!--/#cart_items-->

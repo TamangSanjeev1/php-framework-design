@@ -74,6 +74,20 @@ class Order extends Controller
 		}
 		$this->view->render("cart/cart");	 
 	}
+
+	function checkout(){
+		if ($_POST) {
+			# code...
+			if ($_POST['payment'] == "Paypal") {
+				# code...
+				echo "Paypal";
+			}else{
+				$this->view->render("payment/payment_on_delivery");
+			}
+		}else{
+			$this->view->render("cart/cart");	
+		}
+	}
 }
 
 
