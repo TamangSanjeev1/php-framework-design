@@ -80,12 +80,22 @@ class Order extends Controller
 			# code...
 			if ($_POST['payment'] == "Paypal") {
 				# code...
-				echo "Paypal";
+				echo "paypal";
 			}else{
 				$this->view->render("payment/payment_on_delivery");
 			}
 		}else{
 			$this->view->render("cart/cart");	
+		}
+	}
+
+	function savePaymentOnDelivery(){
+		if ($_POST) {
+			# code...
+			$this->model->savePaymentOnDelivery();
+			$this->view->render("invoice/invoice",0,true);
+		}else{
+			$this->view->render("payment/payment_on_delivery");
 		}
 	}
 }

@@ -24,7 +24,14 @@ class Dashboard extends Controller
 		// $this->view->notify = $notice;
 		$_SESSION['notify'] = $notice; 
 		$this->view->check = $this->listUsers();
-		$this->view->render('dashboard/index',1);
+
+		 if (Session::get('type') == 1) {
+	            # code...
+	            $this->view->render('dashboard/admin/index',1);
+	        }elseif (Session::get('type') == 2) {
+	            # code...
+	           	header("Location: user/index");
+	        }
 	}
 
 	function adduser(){

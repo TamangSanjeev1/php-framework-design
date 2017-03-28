@@ -2,58 +2,33 @@
 		<div class="container">
 
 <div class="shopper-informations">
+
+			<form action="<?php echo URL; ?>order/savePaymentOnDelivery" method="post">
+				<div class="row">	
+					<div class="col-md-8">
+
+					<div class="form-group">
+					    <p>Shopper Information</p>
+							<input type="Email" placeholder="Email" name="email" required="">
+							<input type="text" placeholder="User Name" name="user_name" required="">
+							<input type="text" placeholder="Mobile Phone" name="phone" required="">
+			  		</div>
+
+
+					<div class="form-group">
+					    <p>Shipping Address</p>
+							<input type="text" placeholder="Address 2" name="address" required="">
+							<input type="text" placeholder="City" name="city" required="">
+							<input type="text" placeholder="Postal Code*" name="postal_code" required="">
+			  		</div>
+			  		<div class="form-group">
+                          <button name="submit" class="btn btn-primary">Continue</button>
+			  		</div>
+				</div>
+			  	
+			</form>
+	
 				<div class="row">
-					<div class="col-sm-3">
-						<div class="shopper-info">
-							<p>Shopper Information</p>
-							<form>
-								<input type="Email" placeholder="Email">
-								<input type="text" placeholder="User Name">
-							</form>
-						</div>
-					</div>
-					<div class="col-sm-5 clearfix">
-						<div class="bill-to">
-							<p>Shipping Address</p>
-							<div class="form-one">
-								<form>
-									<input type="text" placeholder="Address 1 *">
-									<input type="text" placeholder="Address 2">
-									<input type="text" placeholder="City">
-									<input type="text" placeholder="Postal Code*">
-								</form>
-							</div>
-							<div class="form-two">
-								<form>
-									<input type="text" placeholder="Zip / Postal Code *">
-									<select>
-										<option>-- Country --</option>
-										<option>United States</option>
-										<option>Bangladesh</option>
-										<option>UK</option>
-										<option>India</option>
-										<option>Pakistan</option>
-										<option>Ucrane</option>
-										<option>Canada</option>
-										<option>Dubai</option>
-									</select>
-									<select>
-										<option>-- State / Province / Region --</option>
-										<option>United States</option>
-										<option>Bangladesh</option>
-										<option>UK</option>
-										<option>India</option>
-										<option>Pakistan</option>
-										<option>Ucrane</option>
-										<option>Canada</option>
-										<option>Dubai</option>
-									</select>
-									<input type="text" placeholder="Mobile Phone">
-									<input type="text" placeholder="Fax">
-								</form>
-							</div>
-						</div>
-					</div>
 					<div class="col-sm-4">
 						<div class="order-message">
 							<p>Shipping Order</p>
@@ -96,10 +71,6 @@
                           <?php  
                           }  
                           ?> 
-                           <tr>
-                           <td><a class="btn btn-primary" href="">Continue</a> </td>    	 
-                          </tr> 
-
                           </tbody>
                           </table>
 							

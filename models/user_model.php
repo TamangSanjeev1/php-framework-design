@@ -10,6 +10,15 @@ class User_Model extends Model
 		parent::__construct();
 	}
 
+	function getOrderRequest(){
+		$query = $this->db->prepare("SELECT customer_product.cust_product_id, products.product_name, customer.customer_name, customer_product.product_quantity, customer_product.req_date FROM customer_product JOIN products ON products.product_id = customer_product.product_id JOIN customer ON customer.customer_id = customer_product.customer_id JOIN users ON users.user_id = products.user_id WHERE users.user_id = :id");
+        $query->execute(array(
+                ':id' => $_SESSION['user'] 
+            ));
+        $orders = $query->fetchAll();
+        return $orders;
+	}
+
 	function getStockNotification(){
         $query = $this->db->prepare("SELECT product_id, product_name, product_quantity FROM products WHERE product_quantity = 0 AND user_id = :id");
         $query->execute(array(

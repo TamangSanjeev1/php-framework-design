@@ -22,7 +22,8 @@ class User extends Controller
 	function index(){
 		$notice = $this->model->getStockNotification();
 		$_SESSION['notify'] = $notice; 
-		$this->view->render('dashboard/user',1);
+		$this->view->item_List = sizeof($this->model->listItems());
+		$this->view->render('dashboard/user/index',1);
 	}
 
 	function userProfile(){
@@ -289,5 +290,10 @@ class User extends Controller
 	function logout(){
  		Session::destroy();
  		header('location: ../login');
+ 	}
+
+ 	function getOrder(){
+ 		$this->view->orderList =  $this->model->getOrderRequest();
+ 		$this->view->render('dashboard/pages/productorders',1);
  	}
 }
