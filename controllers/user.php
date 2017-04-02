@@ -23,7 +23,23 @@ class User extends Controller
 		$notice = $this->model->getStockNotification();
 		$_SESSION['notify'] = $notice; 
 		$this->view->item_List = sizeof($this->model->listItems());
+		// $this->view->chartData = $this->model->getChartValues();
 		$this->view->render('dashboard/user/index',1);
+	}
+
+	function chartData(){
+		$this->view->chartData = $this->model->getChartValues();
+		print json_encode($this->view->chartData);
+	}
+
+	function deliveryCheckout($id){
+		$this->model->deliveryCheckout($id);
+		header('location: ../deliveredProducts');
+	}
+
+	function deliveredProducts(){
+		$this->view->productList = $this->model->deliveredProductList();;
+		$this->view->render('dashboard/pages/deliveredproducts',1);
 	}
 
 	function userProfile(){
@@ -295,5 +311,10 @@ class User extends Controller
  	function getOrder(){
  		$this->view->orderList =  $this->model->getOrderRequest();
  		$this->view->render('dashboard/pages/productorders',1);
+ 	}
+
+ 	function customerOrder($id){
+ 		$this->view->list =  $this->model->getCustomerOrder($id);
+ 		$this->view->render('dashboard/pages/userorder',1);
  	}
 }

@@ -10,13 +10,39 @@ class User_Model extends Model
 		parent::__construct();
 	}
 
+	function deliveryCheckout($id){
+		$query = $this->db->prepare("UPDATE customer_product SET status = 'delivered', delivered_date = :delivered_date WHERE cust_product_id = :id");
+		$query->execute(array(
+			'delivered_date' => date('Y-m-d'),
+			'id' => $id 
+		));
+	}
+
+	function deliveredProductList(){
+		$query = $this->db->prepare("SELECT customer_product.cust_product_id, products.product_name, customer.customer_name, customer_product.product_quantity, customer_product.req_date, customer_product.delivery_time_limit d_limit, customer_product.delivered_date FROM customer_product JOIN products ON products.product_id = customer_product.product_id JOIN customer ON customer.customer_id = customer_product.customer_id JOIN users ON users.user_id = products.user_id WHERE users.user_id = :id AND status = 'Delivered'");
+		$query->execute(array(
+				'id' => $_SESSION['user']
+			));
+		$list = $query->fetchAll();
+		return $list;
+	}
+
 	function getOrderRequest(){
-		$query = $this->db->prepare("SELECT customer_product.cust_product_id, products.product_name, customer.customer_name, customer_product.product_quantity, customer_product.req_date FROM customer_product JOIN products ON products.product_id = customer_product.product_id JOIN customer ON customer.customer_id = customer_product.customer_id JOIN users ON users.user_id = products.user_id WHERE users.user_id = :id");
+		$query = $this->db->prepare("SELECT DISTINCT customer.customer_id,customer.customer_name FROM customer INNER JOIN customer_product ON customer_product.customer_id = customer.customer_id INNER JOIN products ON products.product_id = customer_product.product_id INNER JOIN users ON users.user_id = products.user_id WHERE users.user_id = :id");
         $query->execute(array(
                 ':id' => $_SESSION['user'] 
             ));
         $orders = $query->fetchAll();
         return $orders;
+	}
+
+	function getCustomerOrder($id){
+		$query = $this->db->prepare("SELECT customer_product.cust_product_id, products.product_name, customer.customer_name, customer_product.product_quantity, customer_product.req_date, customer_product.delivery_time_limit d_limit, IFNULL(status,'Not Delivered') status FROM customer_product JOIN products ON products.product_id = customer_product.product_id JOIN customer ON customer.customer_id = customer_product.customer_id JOIN users ON users.user_id = products.user_id WHERE customer.customer_id = :id");
+		 $query->execute(array(
+                ':id' => $id 
+            ));
+        $custOrder = $query->fetchAll();
+        return $custOrder;
 	}
 
 	function getStockNotification(){
@@ -28,6 +54,18 @@ class User_Model extends Model
         return $notice;
     }
     
+    function getChartValues(){
+    	$date = date('Y-m-d'); 
+    	$query = $this->db->prepare("SELECT product_quantity, req_date FROM customer_product WHERE req_date BETWEEN :start_date AND :end_date");
+    	$query->execute(array(
+    		'start_date' => date('Y-m-1'),
+    		'end_date' => $date 
+    		));
+    	$data = array(); 
+    	$data = $query->fetchAll();
+    	return $data;
+    }
+
 	public function storeItem(){	
 		$listno = $this->db->prepare("SELECT product_cat_id FROM product_category WHERE product_cat_name = :cat_name");
 		$listno->execute(array(':cat_name' => $_POST['category']));	

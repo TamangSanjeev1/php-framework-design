@@ -75,12 +75,13 @@ class Order extends Controller
 		$this->view->render("cart/cart");	 
 	}
 
-	function checkout(){
+	function checkout($value = null){
 		if ($_POST) {
 			# code...
 			if ($_POST['payment'] == "Paypal") {
 				# code...
-				echo "paypal";
+				$this->view->error = $value;
+				$this->view->paypalRender("paymentform");
 			}else{
 				$this->view->render("payment/payment_on_delivery");
 			}
@@ -88,6 +89,11 @@ class Order extends Controller
 			$this->view->render("cart/cart");	
 		}
 	}
+
+	function paymentRedirect($value){
+		$this->view->error = $value;
+		$this->view->paypalRender("paymentform");
+	}	
 
 	function savePaymentOnDelivery(){
 		if ($_POST) {
@@ -97,6 +103,11 @@ class Order extends Controller
 		}else{
 			$this->view->render("payment/payment_on_delivery");
 		}
+	}
+
+	function transactionConfirmation(){
+		$this->model->transactionConfirmation();
+		print_r('done');
 	}
 }
 

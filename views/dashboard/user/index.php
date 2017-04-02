@@ -1,4 +1,9 @@
+
         <div id="page-wrapper">
+        <?php print json_encode($this->chartData); 
+                    print_r($this->chartData);
+                    // echo "Test";
+      ?>
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Dashboard</h1>
@@ -96,10 +101,19 @@
                     </div>
                 </div>
 
-                
-</div>
 
+                
+        </div>
+
+<!--Chart-->
+<div class="panel panel-default">
+    <div class="chart-container" style="width:640; height: auto;">
+        <canvas id="myCanvas"></canvas>
     </div>
+</div>
+<!-- for chart -->
+
+            </div>
                             </div>
                             <!-- /.row -->
                         </div>

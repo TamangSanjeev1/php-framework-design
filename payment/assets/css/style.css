@@ -1,0 +1,75 @@
+/*
+** This is the css for the admin login protal
+*/
+.main-body{
+	background-color: #6e5f7c;
+}
+
+/*This is the css for login panel*/
+.main-wrapper{
+	position: relative;
+	padding: 5em 0;
+	margin: 0 auto;
+
+}
+
+/*This is the css for admin text*/
+.title-position{
+	text-align: center;
+}
+
+/*
+** This is the css for the admin dashboard
+*/
+/*Title position*/
+.left-col{
+	background-color: #78797b;
+	height: calc(100vh + 500px);
+	display: inline-block;
+}
+
+/*For heading*/
+.left-col h2{
+	color: #fff;
+
+}
+
+/*for side navigation bar*/
+.nav-stacked li a{
+	color: white;
+}
+
+.active-main{
+	background-color: #f28d35;
+}
+
+/*for contents first images*/
+.content{
+	padding-top: 2em; 
+}
+
+#images_gallery_appear{
+	position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    filter:alpha(opacity=50);
+    -moz-opacity:0.5;
+    -khtml-opacity: 0.5;
+    opacity: 0.1;
+    z-index: 10000;
+}
+
+#image_pop{
+	display: block;
+	margin: 0 auto;
+	position: absolute;
+	left: 8.7em;
+	z-index: 25;
+	top: 15em;
+	border: 2em solid #fff;
+	height: 80%;
+	width: 80%;
+}

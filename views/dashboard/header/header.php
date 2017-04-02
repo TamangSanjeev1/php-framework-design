@@ -282,45 +282,84 @@
                              ?> <!-- Charts -->
                         <span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
+                            <?php if (Session::get('type') == 2) { ?>
                                 <li>
                                     <a href="<?php echo URL; ?>user/listitems">
                                     <?php 
-                                        if (Session::get('type') == 2) {
+                                        
                                              # code...
                                             echo "List Product";
-                                         }
-                             ?> <!-- Charts --></a>
-                                </li>
+                                         
+                             ?> <!-- Charts --></a></li><?php } ?>
+                                
+                                <?php if (Session::get('type') == 2) { ?>
                                 <li>
                                     <a href="<?php echo URL; ?>user/additems">
                                     <?php 
-                                        if (Session::get('type') == 2) {
+                                        
                                              # code...
                                             echo "Add Product";
-                                         }
-                             ?> <!-- Charts --></a>
-                                </li>
+                                         
+                             ?> <!-- Charts --></a> </li><?php } ?>
+                               
+                                <?php if (Session::get('type') == 2) { ?>
                                  <li>
                                     <a href="<?php echo URL; ?>user/producttype">
                                     <?php 
-                                        if (Session::get('type') == 2) {
+                                        
                                              # code...
                                             echo "Add Product Type";
-                                         }
-                             ?> <!-- Charts --></a>
-                                </li>
+                                         
+                             ?> <!-- Charts --></a></li><?php } ?>
+                                
+                                <?php
+                                        if (Session::get('type') == 2) {
+                                ?>
                                  <li>
                                     <a href="<?php echo URL; ?>user/featuredItemsList">
                                     <?php 
-                                        if (Session::get('type') == 2) {
                                              # code...
                                             echo "List Featured Item";
-                                         }
-                             ?> <!-- Charts --></a>
-                                </li>
+                                       
+                             ?> <!-- Charts --></a></li><?php } ?>
+                                
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+                         <li>
+                           <?php 
+                                        if (Session::get('type') == 2) {
+                            ?>
+                            <a href="<?php echo URL; ?>user/getOrder"><i class="fa glyphicon glyphicon-yen fa-fw"></i> 
+                            <?php    
+                                             # code...
+                                            echo "Orders";
+                                         
+                             ?></a></li><?php } ?>
+                        
+                         
+                          <?php
+                            if (Session::get('type') == 2) {
+                          ?>
+                           <li>
+                            <a href="<?php echo URL; ?>user/getOrder"><i class="fa glyphicon glyphicon-file fa-fw"></i> <?php 
+                                        
+                                             # code...
+                                            echo "Reports";
+                                        
+                             ?></a></li><?php  } ?>
+
+                              <?php
+                            if (Session::get('type') == 2) {
+                          ?>
+                           <li>
+                            <a href="<?php echo URL; ?>user/deliveredProducts"><i class="fa glyphicon glyphicon-file fa-fw"></i> <?php 
+                                        
+                                             # code...
+                                            echo "Delivered Products";
+                                        
+                             ?></a></li><?php  } ?>
+                        
                        
                     </ul>
                 </div>

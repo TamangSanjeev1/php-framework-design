@@ -10,7 +10,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            DataTables Advanced Tables
+                            Customers Tables
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -18,27 +18,25 @@
                                 <thead>
                                     <tr>
                                         <th>S.N</th>
-                                        <th>Product Name</th>
                                         <th>Customer Name</th>
-                                        <th>Order Quantity</th>
-                                        <th>Requested Date</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <?php foreach($this->orderList as $list){ ?>
+                                        <?php  $count = 1;
+                                                foreach($this->orderList as $list){ 
+                                                    ?>
+                                     <tr class="odd gradeX">
 
+                                                <?php
+                                                    echo "<td>".$count."</td>";
+                                                    $count++;
+                                                    echo "<td>".$list['customer_name']."</td>";
+                                                ?>
+                                                <td><a href="<?php echo URL; ?>user/customerOrder/<?php echo $list['customer_id']; ?>"><button type="button" class="btn btn-primary">View</button></a></td>
 
-                                    <tr class="odd gradeX">
-
-                                        <td><?php  ?></td>
-                                        <td><?php echo $list['product_name']; ?></td>
-                                        <td><?php echo $list['customer_name']; ?></td>
-                                        <td<?php echo $list['product_quantity']; ?></td>
-                                        <td><?php echo $list['req_date']; ?></td>
-                                        <td><?php print_r($list); ?></td>
                                     </tr>
-                                    <?php } ?>
+                                            <?php }?>
                                 </tbody>
                             </table>
                             <!-- /.table-responsive -->
