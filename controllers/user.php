@@ -317,4 +317,20 @@ class User extends Controller
  		$this->view->list =  $this->model->getCustomerOrder($id);
  		$this->view->render('dashboard/pages/userorder',1);
  	}
+
+ 	function getSalesReport(){
+ 	// 	$testing = 1;
+		// $hold = explode('-', date('Y-m-d'));
+		// $mnth = $hold[2]-1;
+		// print_r(date('Y-'.$mnth.'-d'));
+		if ($_POST) {
+			# code...
+ 			$this->view->report = $this->model->salesReport($_POST['date_value']);
+		}else{
+			$this->view->report = $this->model->salesReport();
+		}	
+ 		// print_r($_POST);
+ 		// print_r($this->view->report);
+ 		$this->view->render('dashboard/reports/monthly_sales_report',1);
+ 	}
 }

@@ -10,6 +10,27 @@ class User_Model extends Model
 		parent::__construct();
 	}
 
+	function salesReport($value = null){
+		$date = date('Y-m-1');
+		$query = $this->db->prepare("SELECT products.product_name,customer.customer_name,customer_product.product_quantity, customer_product.delivered_date FROM customer_product JOIN products ON products.product_id = customer_product.product_id JOIN customer ON customer.customer_id = customer_product.customer_id WHERE customer_product.status = 'delivered' AND customer_product.delivered_date BETWEEN :start_date AND :end_date"); 
+
+		if ($value) {
+			# code..
+			$query->execute(array(
+				'start_date' => $value,
+				'end_date' => date('Y-m-d')
+			));
+		}else{
+			$query->execute(array(
+				'start_date' => $date,
+				'end_date' => date('Y-m-d')
+			));
+		}
+		
+		$report = $query->fetchAll();
+		return $report;
+	}	
+
 	function deliveryCheckout($id){
 		$query = $this->db->prepare("UPDATE customer_product SET status = 'delivered', delivered_date = :delivered_date WHERE cust_product_id = :id");
 		$query->execute(array(

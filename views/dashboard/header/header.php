@@ -342,7 +342,7 @@
                             if (Session::get('type') == 2) {
                           ?>
                            <li>
-                            <a href="<?php echo URL; ?>user/getOrder"><i class="fa glyphicon glyphicon-file fa-fw"></i> <?php 
+                            <a href="<?php echo URL; ?>user/getSalesReport"><i class="fa glyphicon glyphicon-file fa-fw"></i> <?php 
                                         
                                              # code...
                                             echo "Reports";
