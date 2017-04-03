@@ -20,7 +20,26 @@ class User extends Controller
 	}
 
 	function index(){
-		$this->view->render('dashboard/user',1);
+		$notice = $this->model->getStockNotification();
+		$_SESSION['notify'] = $notice; 
+		$this->view->item_List = sizeof($this->model->listItems());
+		// $this->view->chartData = $this->model->getChartValues();
+		$this->view->render('dashboard/user/index',1);
+	}
+
+	function chartData(){
+		$this->view->chartData = $this->model->getChartValues();
+		print json_encode($this->view->chartData);
+	}
+
+	function deliveryCheckout($id){
+		$this->model->deliveryCheckout($id);
+		header('location: ../deliveredProducts');
+	}
+
+	function deliveredProducts(){
+		$this->view->productList = $this->model->deliveredProductList();;
+		$this->view->render('dashboard/pages/deliveredproducts',1);
 	}
 
 	function userProfile(){
@@ -119,6 +138,10 @@ class User extends Controller
 	}
 
 	function additems(){
+		$this->itemType = $this->model->itemType();
+		$this->view->types = $this->itemType;
+		$notice = $this->model->getStockNotification();
+		$_SESSION['notify'] = $notice; 
 		$this->view->render('dashboard/pages/additems',1);
 	}
 
@@ -161,6 +184,9 @@ class User extends Controller
 									$this->model->storeItem();
 									# code...
 									$_SESSION['error'] = 'Successfully Added';
+
+									$notice = $this->model->getStockNotification();
+									$_SESSION['notify'] = $notice; 
 									header('location: additems');
 								// $temp = MassUpload::checkErrors("galleries");
 								// $errors = $temp;
@@ -197,6 +223,9 @@ class User extends Controller
 	  		unlink($value);
 		}
 
+		
+		$notice = $this->model->getStockNotification();
+		$_SESSION['notify'] = $notice; 
 		header('location: ../../user/listitems');
 	}
 
@@ -210,7 +239,9 @@ class User extends Controller
 
 	function updateProduct($id){
 		if($_POST){			
-			$this->model->updateProduct($id);	
+			$this->model->updateProduct($id);
+			$notice = $this->model->getStockNotification();
+			$_SESSION['notify'] = $notice; 	
 			header('location: ../listItems');
 		}else{
 			header('location: ../listItems');
@@ -255,8 +286,51 @@ class User extends Controller
 		header('location: ../featuredItemsList');
 	}
 
+	function producttype(){
+		$this->view->typeList = $this->model->productTypeList();
+
+		$this->view->render('dashboard/pages/productType',1);
+	}
+
+	function addproducttype(){
+		$this->model->addproducttype();
+
+		header('location: producttype');
+	}
+
+	function deleteProductType($id){
+		$this->model->deleteProductType($id);
+		header('location: ../producttype');
+	}
+
 	function logout(){
  		Session::destroy();
  		header('location: ../login');
+ 	}
+
+ 	function getOrder(){
+ 		$this->view->orderList =  $this->model->getOrderRequest();
+ 		$this->view->render('dashboard/pages/productorders',1);
+ 	}
+
+ 	function customerOrder($id){
+ 		$this->view->list =  $this->model->getCustomerOrder($id);
+ 		$this->view->render('dashboard/pages/userorder',1);
+ 	}
+
+ 	function getSalesReport(){
+ 	// 	$testing = 1;
+		// $hold = explode('-', date('Y-m-d'));
+		// $mnth = $hold[2]-1;
+		// print_r(date('Y-'.$mnth.'-d'));
+		if ($_POST) {
+			# code...
+ 			$this->view->report = $this->model->salesReport($_POST['date_value']);
+		}else{
+			$this->view->report = $this->model->salesReport();
+		}	
+ 		// print_r($_POST);
+ 		// print_r($this->view->report);
+ 		$this->view->render('dashboard/reports/monthly_sales_report',1);
  	}
 }

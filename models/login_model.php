@@ -11,7 +11,7 @@ class Login_Model extends Model
 	}
 
 	public function verify(){
-		$query = $this->db->prepare("SELECT user_id,type_id FROM users WHERE email = :email AND user_password = MD5(:password)");
+		$query = $this->db->prepare("SELECT user_id,type_id,user_name FROM users WHERE email = :email AND user_password = MD5(:password)");
 		$query->execute(array(
 			':email' => $_POST['email'],
 			':password' => $_POST['password']
@@ -26,6 +26,7 @@ class Login_Model extends Model
 			Session::set('loggedIn',true);
 			Session::set('type',$this->temp);
 			$_SESSION['user'] = $store[0]['user_id'];
+			$_SESSION['user_name'] = $store[0]['user_name'];
 			header('location: ../dashboard');
 		}else{
 			Session::init();

@@ -1,3 +1,15 @@
+
+        <div id="page-wrapper">
+        <?php print json_encode($this->chartData); 
+                    print_r($this->chartData);
+                    // echo "Test";
+      ?>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Dashboard</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
 <div class="row">
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-primary">
@@ -13,7 +25,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="user/userProfile">
+                        <a href="userProfile">
                             <div class="panel-footer">
                                 <span class="pull-left">View Profile</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -30,12 +42,12 @@
                                     <i class="fa fa-tasks fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">12</div>
+                                    <div class="huge"><?php print_r($this->item_List); ?></div>
                                     <div>Add New Items</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="user/additems">
+                        <a href="additems">
                             <div class="panel-footer">
                                 <span class="pull-left">Add</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -56,8 +68,8 @@
                                     <div>New Orders!</div>
                                 </div>
                             </div>
-                        </div>
-                        <a href="#">
+                        </div> 
+                        <a href="getOrder">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -74,12 +86,12 @@
                                     <i class="fa fa-support fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">13</div>
+                                    <div class="huge"><?php print_r($this->item_List); ?></div>
                                     <div>View Products</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="user/listitems">
+                        <a href="listitems">
                             <div class="panel-footer">
                                 <span class="pull-left">View</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -89,5 +101,34 @@
                     </div>
                 </div>
 
+
                 
+        </div>
+
+<!--Chart-->
+<div class="panel panel-default">
+    <div class="chart-container" style="width:640; height: auto;">
+        <canvas id="myCanvas"></canvas>
+    </div>
 </div>
+<!-- for chart -->
+
+            </div>
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-8 -->
+                      
+                </div>
+                <!-- /.col-lg-4 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->

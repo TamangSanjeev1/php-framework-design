@@ -10,12 +10,93 @@ class User_Model extends Model
 		parent::__construct();
 	}
 
+	function salesReport($value = null){
+		$date = date('Y-m-1');
+		$query = $this->db->prepare("SELECT products.product_name,customer.customer_name,customer_product.product_quantity, customer_product.delivered_date FROM customer_product JOIN products ON products.product_id = customer_product.product_id JOIN customer ON customer.customer_id = customer_product.customer_id WHERE customer_product.status = 'delivered' AND customer_product.delivered_date BETWEEN :start_date AND :end_date"); 
+
+		if ($value) {
+			# code..
+			$query->execute(array(
+				'start_date' => $value,
+				'end_date' => date('Y-m-d')
+			));
+		}else{
+			$query->execute(array(
+				'start_date' => $date,
+				'end_date' => date('Y-m-d')
+			));
+		}
+		
+		$report = $query->fetchAll();
+		return $report;
+	}	
+
+	function deliveryCheckout($id){
+		$query = $this->db->prepare("UPDATE customer_product SET status = 'delivered', delivered_date = :delivered_date WHERE cust_product_id = :id");
+		$query->execute(array(
+			'delivered_date' => date('Y-m-d'),
+			'id' => $id 
+		));
+	}
+
+	function deliveredProductList(){
+		$query = $this->db->prepare("SELECT customer_product.cust_product_id, products.product_name, customer.customer_name, customer_product.product_quantity, customer_product.req_date, customer_product.delivery_time_limit d_limit, customer_product.delivered_date FROM customer_product JOIN products ON products.product_id = customer_product.product_id JOIN customer ON customer.customer_id = customer_product.customer_id JOIN users ON users.user_id = products.user_id WHERE users.user_id = :id AND status = 'Delivered'");
+		$query->execute(array(
+				'id' => $_SESSION['user']
+			));
+		$list = $query->fetchAll();
+		return $list;
+	}
+
+	function getOrderRequest(){
+		$query = $this->db->prepare("SELECT DISTINCT customer.customer_id,customer.customer_name FROM customer INNER JOIN customer_product ON customer_product.customer_id = customer.customer_id INNER JOIN products ON products.product_id = customer_product.product_id INNER JOIN users ON users.user_id = products.user_id WHERE users.user_id = :id");
+        $query->execute(array(
+                ':id' => $_SESSION['user'] 
+            ));
+        $orders = $query->fetchAll();
+        return $orders;
+	}
+
+	function getCustomerOrder($id){
+		$query = $this->db->prepare("SELECT customer_product.cust_product_id, products.product_name, customer.customer_name, customer_product.product_quantity, customer_product.req_date, customer_product.delivery_time_limit d_limit, IFNULL(status,'Not Delivered') status FROM customer_product JOIN products ON products.product_id = customer_product.product_id JOIN customer ON customer.customer_id = customer_product.customer_id JOIN users ON users.user_id = products.user_id WHERE customer.customer_id = :id");
+		 $query->execute(array(
+                ':id' => $id 
+            ));
+        $custOrder = $query->fetchAll();
+        return $custOrder;
+	}
+
+	function getStockNotification(){
+        $query = $this->db->prepare("SELECT product_id, product_name, product_quantity FROM products WHERE product_quantity = 0 AND user_id = :id");
+        $query->execute(array(
+                ':id' => $_SESSION['user'] 
+            ));
+        $notice = $query->fetchAll();
+        return $notice;
+    }
+    
+    function getChartValues(){
+    	$date = date('Y-m-d'); 
+    	$query = $this->db->prepare("SELECT product_quantity, req_date FROM customer_product WHERE req_date BETWEEN :start_date AND :end_date");
+    	$query->execute(array(
+    		'start_date' => date('Y-m-1'),
+    		'end_date' => $date 
+    		));
+    	$data = array(); 
+    	$data = $query->fetchAll();
+    	return $data;
+    }
+
 	public function storeItem(){	
+		$listno = $this->db->prepare("SELECT product_cat_id FROM product_category WHERE product_cat_name = :cat_name");
+		$listno->execute(array(':cat_name' => $_POST['category']));	
+		$cat_no = $listno->fetchAll();	
+
 		$query = $this->db->prepare("INSERT INTO products(product_name, product_quantity, product_price, product_details, product_brand, user_id, product_cat_id) VALUES (:product_name,:product_quantity,:product_price,:product_details,:product_brand,:user_id,:product_cat)");
 		$pr_name = $_POST['product_name'];
 		$pr_qntity = $_POST['quantity'];
 
-		$query->execute(array(':product_name' => $pr_name, ':product_quantity' => $pr_qntity, ':product_price' => $_POST['price'],':product_details' => $_POST['detail'], ':product_brand' => $_POST['brand'], ':user_id' => $_SESSION['user'], ':product_cat' => '1'));	
+		$query->execute(array(':product_name' => $pr_name, ':product_quantity' => $pr_qntity, ':product_price' => $_POST['price'],':product_details' => $_POST['detail'], ':product_brand' => $_POST['brand'], ':user_id' => $_SESSION['user'], ':product_cat' => $cat_no[0][0]));	
 
 		$sth = $this->db->prepare("SELECT `product_id` FROM products ORDER BY `product_id` DESC LIMIT 1");
 		$sth->execute(); 
@@ -86,13 +167,18 @@ class User_Model extends Model
 	}
 
 	function updateProduct($id){
-		$query = $this->db->prepare("UPDATE products SET product_name = :p_name,product_quantity= :p_quantity, product_price = :p_price, product_details = :p_details, product_brand = :p_brand WHERE product_id = :id");
+		$listno = $this->db->prepare("SELECT product_cat_id FROM product_category WHERE product_cat_name = :cat_name");
+		$listno->execute(array(':cat_name' => $_POST['category']));	
+		$cat_no = $listno->fetchAll();	
+
+		$query = $this->db->prepare("UPDATE products SET product_name = :p_name,product_quantity= :p_quantity, product_price = :p_price, product_details = :p_details, product_brand = :p_brand, product_cat_id = :product_cat WHERE product_id = :id");
 			$query->execute(array(
 				':p_name' => $_POST['product_name'],
 				':p_quantity' => $_POST['quantity'],
 				':p_price' => $_POST['price'],
 				':p_details' => $_POST['detail'],
 				':p_brand' => $_POST['brand'],
+				':product_cat' => $cat_no[0][0],
 				'id' => $id
 			));
 		
@@ -212,6 +298,7 @@ class User_Model extends Model
 
 	function featuredItems($id){
 		$query = $this->db->prepare("SELECT * FROM featured_products WHERE user_id = :user_id");
+
 		$query->execute(array(
 			':user_id' => $_SESSION['user']
 		));
@@ -271,5 +358,25 @@ class User_Model extends Model
 			));
 
 		return $cmp_img;
+	}
+
+	function deleteProductType($id){
+		$query = $this->db->prepare("DELETE FROM product_category WHERE product_cat_id = :id");
+		$query->execute(array(
+			':id' => $id));	
+	}
+
+	function addproducttype(){
+		$query = $this->db->prepare("INSERT INTO product_category(product_cat_name) VALUES (:product_cat_name)");
+		$query->execute(array(':product_cat_name' => $_POST['product_cat']));	
+	}
+	
+	function productTypeList(){
+		$query = $this->db->prepare("SELECT * FROM product_category");
+		$query->execute();
+
+		$product_type = $query->fetchAll();
+
+		return $product_type;	
 	}
 }

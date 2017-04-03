@@ -23,4 +23,14 @@ class View
 			require 'views/footer.php';	
 		}
 	}
+
+	public function paypalRender($name, $value = 0){
+		if($value == 1){
+			require 'payment/pages/header.php';
+			require 'payment/'.$name.'.php';
+			require 'payment/pages/footer.php';
+		}else{
+			require 'payment/'.$name.'.php';	
+		}
+	}
 }
