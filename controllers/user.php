@@ -38,8 +38,13 @@ class User extends Controller
 	}
 
 	function deliveredProducts(){
-		$this->view->productList = $this->model->deliveredProductList();;
+		$this->view->productList = $this->model->deliveredProductList();
 		$this->view->render('dashboard/pages/deliveredproducts',1);
+	}
+
+	function onlinePaymentdeliveredProducts(){
+		$this->view->productList = $this->model->onlinePaymentDeliveredProductList();
+		$this->view->render('dashboard/pages/onlinePaymentdeliveredProducts',1);
 	}
 
 	function userProfile(){
@@ -311,6 +316,12 @@ class User extends Controller
  	function getOrder(){
  		$this->view->orderList =  $this->model->getOrderRequest();
  		$this->view->render('dashboard/pages/productorders',1);
+ 	}
+
+ 	function getOnlinePaymentRequest(){
+ 		$this->view->orderList =  $this->model->getOnlinePaymentRequest();
+ 		// print_r($this->view->orderList);
+ 		$this->view->render('dashboard/pages/onlinePayment',1);
  	}
 
  	function customerOrder($id){

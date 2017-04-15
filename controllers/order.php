@@ -107,7 +107,7 @@ class Order extends Controller
 
 	function transactionConfirmation(){
 		$this->model->transactionConfirmation();
-		print_r('done');
+		$this->view->render("invoice/invoice",0,true);
 	}
 }
 

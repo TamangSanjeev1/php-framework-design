@@ -1,7 +1,7 @@
  <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Cash on Delivery Delivered Products List</h1>
+                    <h1 class="page-header">Orders</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -10,7 +10,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Order Tables
+                            Customers Tables
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -19,16 +19,12 @@
                                     <tr>
                                         <th>S.N</th>
                                         <th>Customer Name</th>
-                                        <th>Product Name</th>
-                                        <th>Product Quantity</th>
-                                        <th>Requested Day</th>
-                                        <th>Delivered Date</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                        <?php
-                                          $count = 1;
-                                                foreach($this->productList as $list){ 
+                                        <?php  $count = 1;
+                                                foreach($this->orderList as $list){ 
                                                     ?>
                                      <tr class="odd gradeX">
 
@@ -36,14 +32,11 @@
                                                     echo "<td>".$count."</td>";
                                                     $count++;
                                                     echo "<td>".$list['customer_name']."</td>";
-                                                    echo "<td>".$list['product_name']."</td>";
-                                                    echo "<td>".$list['product_quantity']."</td>";
-                                                    echo "<td>".$list['req_date']."</td>";
-                                                    echo "<td>".$list['delivered_date']."</td>";
-                                                    ?>                                               
+                                                ?>
+                                                <td><a href="<?php echo URL; ?>user/customerOrder/<?php echo $list['customer_id']; ?>"><button type="button" class="btn btn-primary">View</button></a></td>
+
                                     </tr>
-                                            <?php 
-                                            }?>
+                                            <?php }?>
                                 </tbody>
                             </table>
                             <!-- /.table-responsive -->

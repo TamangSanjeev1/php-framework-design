@@ -333,7 +333,18 @@
                             <a href="<?php echo URL; ?>user/getOrder"><i class="fa glyphicon glyphicon-yen fa-fw"></i> 
                             <?php    
                                              # code...
-                                            echo "Orders";
+                                            echo "Cash On Delivery Orders";
+                                         
+                             ?></a></li><?php } ?>
+
+                              <li>
+                           <?php 
+                                        if (Session::get('type') == 2) {
+                            ?>
+                            <a href="<?php echo URL; ?>user/getOnlinePaymentRequest"><i class="fa glyphicon glyphicon-yen fa-fw"></i> 
+                            <?php    
+                                             # code...
+                                            echo "Online Payment Orders";
                                          
                              ?></a></li><?php } ?>
                         
@@ -356,9 +367,25 @@
                             <a href="<?php echo URL; ?>user/deliveredProducts"><i class="fa glyphicon glyphicon-file fa-fw"></i> <?php 
                                         
                                              # code...
-                                            echo "Delivered Products";
+                                            echo "COD Delivered Products";
                                         
                              ?></a></li><?php  } ?>
+
+
+                              <?php
+                            if (Session::get('type') == 2) {
+                          ?>
+                           <li>
+                            <a href="<?php echo URL; ?>user/onlinePaymentdeliveredProducts"><i class="fa glyphicon glyphicon-file fa-fw"></i> <?php 
+                                        
+                                             # code...
+                                            echo "Online Payment Delivered Products";
+                                        
+                             ?></a></li><?php  } ?>
+
+                            
+
+                            
                         
                        
                     </ul>

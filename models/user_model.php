@@ -12,18 +12,20 @@ class User_Model extends Model
 
 	function salesReport($value = null){
 		$date = date('Y-m-1');
-		$query = $this->db->prepare("SELECT products.product_name,customer.customer_name,customer_product.product_quantity, customer_product.delivered_date FROM customer_product JOIN products ON products.product_id = customer_product.product_id JOIN customer ON customer.customer_id = customer_product.customer_id WHERE customer_product.status = 'delivered' AND customer_product.delivered_date BETWEEN :start_date AND :end_date"); 
+		$query = $this->db->prepare("SELECT products.product_name,customer.customer_name,customer_product.product_quantity, customer_product.delivered_date FROM customer_product JOIN products ON products.product_id = customer_product.product_id JOIN customer ON customer.customer_id = customer_product.customer_id JOIN users ON products.user_id = users.user_id WHERE customer_product.status = 'delivered' AND customer_product.delivered_date BETWEEN :start_date AND :end_date AND users.user_id = :user_id"); 
 
 		if ($value) {
 			# code..
 			$query->execute(array(
 				'start_date' => $value,
-				'end_date' => date('Y-m-d')
+				'end_date' => date('Y-m-d'),
+				'user_id' => $_SESSION['user']
 			));
 		}else{
 			$query->execute(array(
 				'start_date' => $date,
-				'end_date' => date('Y-m-d')
+				'end_date' => date('Y-m-d'),
+				'user_id' => $_SESSION['user']
 			));
 		}
 		
@@ -40,7 +42,16 @@ class User_Model extends Model
 	}
 
 	function deliveredProductList(){
-		$query = $this->db->prepare("SELECT customer_product.cust_product_id, products.product_name, customer.customer_name, customer_product.product_quantity, customer_product.req_date, customer_product.delivery_time_limit d_limit, customer_product.delivered_date FROM customer_product JOIN products ON products.product_id = customer_product.product_id JOIN customer ON customer.customer_id = customer_product.customer_id JOIN users ON users.user_id = products.user_id WHERE users.user_id = :id AND status = 'Delivered'");
+		$query = $this->db->prepare("SELECT customer_product.cust_product_id, products.product_name, customer.customer_name, customer_product.product_quantity, customer_product.req_date, customer_product.delivery_time_limit d_limit, customer_product.delivered_date FROM customer_product JOIN products ON products.product_id = customer_product.product_id JOIN customer ON customer.customer_id = customer_product.customer_id JOIN users ON users.user_id = products.user_id WHERE users.user_id = :id AND status = 'Delivered' AND order_type is null");
+		$query->execute(array(
+				'id' => $_SESSION['user']
+			));
+		$list = $query->fetchAll();
+		return $list;
+	}
+
+	function onlinePaymentDeliveredProductList(){
+		$query = $this->db->prepare("SELECT customer_product.cust_product_id, products.product_name, customer.customer_name, customer_product.product_quantity, customer_product.req_date, customer_product.delivery_time_limit d_limit, customer_product.delivered_date FROM customer_product JOIN products ON products.product_id = customer_product.product_id JOIN customer ON customer.customer_id = customer_product.customer_id JOIN users ON users.user_id = products.user_id WHERE users.user_id = :id AND status = 'Delivered' AND order_type = 'cashdelivery'");
 		$query->execute(array(
 				'id' => $_SESSION['user']
 			));
@@ -49,7 +60,16 @@ class User_Model extends Model
 	}
 
 	function getOrderRequest(){
-		$query = $this->db->prepare("SELECT DISTINCT customer.customer_id,customer.customer_name FROM customer INNER JOIN customer_product ON customer_product.customer_id = customer.customer_id INNER JOIN products ON products.product_id = customer_product.product_id INNER JOIN users ON users.user_id = products.user_id WHERE users.user_id = :id");
+		$query = $this->db->prepare("SELECT DISTINCT customer.customer_id,customer.customer_name FROM customer INNER JOIN customer_product ON customer_product.customer_id = customer.customer_id INNER JOIN products ON products.product_id = customer_product.product_id INNER JOIN users ON users.user_id = products.user_id WHERE users.user_id = :id AND status is null AND order_type is null");
+        $query->execute(array(
+                ':id' => $_SESSION['user'] 
+            ));
+        $orders = $query->fetchAll();
+        return $orders;
+	}
+
+	function getOnlinePaymentRequest(){
+		$query = $this->db->prepare("SELECT DISTINCT customer.customer_id,customer.customer_name FROM customer INNER JOIN customer_product ON customer_product.customer_id = customer.customer_id INNER JOIN products ON products.product_id = customer_product.product_id INNER JOIN users ON users.user_id = products.user_id WHERE users.user_id = :id AND status is null AND order_type = 'cashdelivery'");
         $query->execute(array(
                 ':id' => $_SESSION['user'] 
             ));

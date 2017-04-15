@@ -1,9 +1,6 @@
 
         <div id="page-wrapper">
-        <?php print json_encode($this->chartData); 
-                    print_r($this->chartData);
-                    // echo "Test";
-      ?>
+        
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Dashboard</h1>

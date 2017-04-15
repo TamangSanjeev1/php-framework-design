@@ -75,17 +75,6 @@ class Authinticate extends Dbconnect{
 					# code...
 					$check = $this->redirections("../../order/paymentRedirect/Sorry");
 				}else{
-					$user_id = $_SESSION['user'];
-					$date = date('Y-m-d');
-					$t_id = uniqid();
-					$_SESSION['t_id'] = $t_id;
-					$total = $_SESSION['total'];
-					$query = "INSERT INTO fund_transfer(user_id, transferred_to, amount, fund_date, transaction_id) VALUES ($user_id,'Flip Shop',$total,'$date','$t_id')";
-					mysqli_query($connect,$query);
-					$currentamt = ($_SESSION['amount'] - $_SESSION['total']);
-					$query = "UPDATE users SET balance = $currentamt WHERE user_id = $user_id";
-					mysqli_query($connect,$query);
-
 					$this->redirections("../../payment/pages/confirmation.php");
 				}
 			}
