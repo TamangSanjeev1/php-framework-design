@@ -34,6 +34,7 @@
           <section class="login_content">
             <form action="../../order/transactionConfirmation" method="post">
               <h1> Payment Confirmation</h1>
+              
               <div>
                 	<input type="hidden" name="email" value="<?php echo $_SESSION['email']; ?>">
 				  	<input type="hidden" name="transaction_id" value="<?php echo $_SESSION['t_id']; ?>">

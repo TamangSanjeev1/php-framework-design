@@ -24,6 +24,10 @@ class View
 		}
 	}
 
+	public function login($name){
+		require 'views/'.$name.'.php';	
+	}
+
 	public function paypalRender($name, $value = 0){
 		if($value == 1){
 			require 'payment/pages/header.php';

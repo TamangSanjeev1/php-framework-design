@@ -4,7 +4,6 @@
 ?>
 
 <?php
-print_r($_POST);
 if(isset($_POST['register'])){
   $db = new Dbconnect();
   $conn = $db->connectDb();
@@ -149,8 +148,8 @@ if(isset($_POST['register'])){
                 <br />
 
                 <div>
-                  <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-                  <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+                  <h1><i class="fa fa-paw"></i> FlipShop!</h1>
+                  <p>©2016 All Rights Reserved. FlipShop Privacy and Terms</p>
                 </div>
               </div>
             </form>

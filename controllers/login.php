@@ -9,7 +9,7 @@
  	}
 
  	function index(){
- 		$this->view->render('login/index');
+ 		$this->view->login('login/index');
  	}
 
  	function verify(){

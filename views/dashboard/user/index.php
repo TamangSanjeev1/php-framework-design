@@ -102,14 +102,9 @@
                 
         </div>
 
-<!--Chart-->
-<div class="panel panel-default">
-    <div class="chart-container" style="width:640; height: auto;">
-        <canvas id="myCanvas"></canvas>
-    </div>
-</div>
-<!-- for chart -->
 
+
+            
             </div>
                             </div>
                             <!-- /.row -->
