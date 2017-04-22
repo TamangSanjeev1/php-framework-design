@@ -1,4 +1,8 @@
-<?php include('header.php'); ?>
+<?php 
+  include('header.php'); 
+  include '../engine/Dbconnect.php';
+?>
+
     <div class="container body">
       <div class="main_container">
         <div class="col-md-3 left_col">
@@ -94,7 +98,7 @@
           <div class="">
             <div class="row top_tiles" style="margin: 10px 0;">
               <div class="col-md-3 col-sm-3 col-xs-6 tile">
-                <span>Total Amount</span>
+                <span>Total Balance</span>
                 <h2><?php echo $_SESSION['amount']; ?></h2>
               
               </div>
@@ -103,5 +107,39 @@
             <br />
         </div>
         <!-- /page content -->
+        <?php 
+
+          $u_id = $_SESSION['user'];
+          $db = new Dbconnect();
+          $conn = $db->connectDb();
+          $query = "SELECT * FROM fund_transfer WHERE user_id = $u_id";
+          $fetch = mysqli_query($conn,$query);
+
+        ?>
+    <h1>Transactions</h1>
+    <table class="table">
+    <thead>
+      <tr>
+        <th>Transferred To</th>
+        <th>Amount</th>
+        <th>Transferred Date</th>
+        <th>Transaction Code</th>
+      </tr>
+    </thead>
+    <tbody>
+    <?php
+      while ($row = mysqli_fetch_assoc($fetch)) {
+        # code..
+    ?>
+      <tr>
+        <td><?php echo $row['transferred_to']; ?></td>
+        <td><?php echo $row['amount']; ?></td>
+        <td><?php echo $row['fund_date']; ?></td>
+        <td><?php echo $row['transaction_id']; ?></td>
+      </tr>
+      <?php } ?>
+    
+    </tbody>
+  </table>
 
 <?php include('footer.php'); ?>

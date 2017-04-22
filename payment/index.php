@@ -4,6 +4,18 @@
 ?>
 
 <?php
+print_r($_POST);
+if(isset($_POST['register'])){
+  $db = new Dbconnect();
+  $conn = $db->connectDb();
+  $name = $_POST['name'];
+  $email = $_POST['email'];
+  $password = md5($_POST['password']);
+  $address = $_POST['address'];
+  $query = "INSERT INTO users(user_name, user_email, user_password, user_address) VALUES ('$name','$email','$password','address')";
+  mysqli_query($conn,$query);
+}
+
   $store = new Authinticate();
   $err = array();
   if(isset($_POST) && !empty($_POST)){
@@ -103,20 +115,28 @@
 
         <div id="register" class="animate form registration_form">
           <section class="login_content">
-            <form>
+            <form action="" method="post">
               <h1>Create Account</h1>
               <div>
-                <input type="text" class="form-control" placeholder="Username" required="" />
+                <input type="text" name="name" class="form-control" placeholder="name" required="" />
               </div>
               <div>
-                <input type="email" class="form-control" placeholder="Email" required="" />
+                <input type="email" name="email" class="form-control" placeholder="Email" required="" />
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" required="" />
+                <input type="password" name="password" class="form-control" placeholder="Password" required="" />
               </div>
               <div>
-                <a class="btn btn-default submit" href="index.html">Submit</a>
+                <input type="text" name="address" class="form-control" placeholder="Address" required="" />
               </div>
+              <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-3 col-sm-offset-3">
+                          <input type="submit" name="register" id="login-submit" tabindex="4" class="form-control btn btn-primary" value="Register">
+
+                        </div>
+                      </div>
+                    </div>
 
               <div class="clearfix"></div>
 

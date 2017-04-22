@@ -29,7 +29,7 @@ class Authinticate extends Dbconnect{
 	public function authinticateUser($formData){
 		$connect = parent::connectDb();
 
-		$read = parent::getByUserAndPassword('users',$formData['username'],$formData['password']);
+		$read = parent::getByUserAndPassword('users',$formData['username'],md5($formData['password']));
 		
 		$fetch = mysqli_query($connect,$read);
 		$count = mysqli_num_rows($fetch);
