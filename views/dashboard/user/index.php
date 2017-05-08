@@ -102,6 +102,56 @@
                 
         </div>
 
+        <!--For the table-->
+
+         <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Online Payments
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>S.N</th>
+                                        <th>Transaction ID</th>
+                                        <th>Customer Name</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <?php
+                                            // print_r($this->transaction);
+                                          $count = 1;
+                                                foreach($this->transaction as $list){ 
+                                                    ?>
+                                     <tr class="odd gradeX">
+
+                                                <?php
+                                                    echo "<td>".$count."</td>";
+                                                    $count++;
+                                                    echo "<td>".$list['transaction_id']."</td>";
+                                                    echo "<td>".$list['customer_name']."</td>";
+                                                    echo "<td>".$list['payed_amt']."</td>";
+                                                ?>
+
+                                    </tr>
+                                            <?php }?>
+                                </tbody>
+                            </table>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+
+
+        <!---->
+
 
 
             

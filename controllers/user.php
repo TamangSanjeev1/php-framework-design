@@ -21,6 +21,8 @@ class User extends Controller
 
 	function index(){
 		$notice = $this->model->getStockNotification();
+		$transactionList = $this->model->transactionList();
+		$this->view->transaction = $transactionList;
 		$_SESSION['notify'] = $notice; 
 		$this->view->item_List = sizeof($this->model->listItems());
 		// $this->view->chartData = $this->model->getChartValues();

@@ -235,14 +235,14 @@
 											<img src="<?php echo URL; ?>/public/images/product-details/<?php echo $value['image_name']; ?>" alt="" />
 											<h2>$<?php echo $value['product_price']; ?></h2>
 											<p><?php echo $value['product_name']; ?></p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											
 										</div>
 										<div class="product-overlay">
 											<div class="overlay-content">
 
 												<h2>Rs.<?php echo $value['product_price']; ?></h2>
 												<p><?php echo $value['product_details']; ?></p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											
 											</div>
 										</div>
 								</div>

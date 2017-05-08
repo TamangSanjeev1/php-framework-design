@@ -40,31 +40,33 @@
         From
         <address>
           <strong>Flip Shop, Inc.</strong><br>
-          795 Folsom Ave, Suite 600<br>
-          San Francisco, CA 94107<br>
+          Boudha - 07, Kathmandu<br>
           Phone: (804) 123-5432<br>
-          Email: info@almasaeedstudio.com
+          Email: flipshopmail.com
         </address>
       </div>
       <!-- /.col -->
       <div class="col-sm-4 invoice-col">
         To
         <address>
-          <strong>John Doe</strong><br>
-          795 Folsom Ave, Suite 600<br>
+          <strong> <?php 
+        print_r($_SESSION['name']);
+      ?></strong><br>
+          <!-- 95 Folsom Ave, Suite 600<br>
           San Francisco, CA 94107<br>
           Phone: (555) 539-1037<br>
           Email: john.doe@example.com
-        </address>
+        </address> -->
       </div>
+
       <!-- /.col -->
-      <div class="col-sm-4 invoice-col">
+  <!--     <div class="col-sm-4 invoice-col">
         <b>Invoice #007612</b><br>
         <br>
         <b>Order ID:</b> 4F3S8J<br>
         <b>Payment Due:</b> 2/22/2014<br>
         <b>Account:</b> 968-34567
-      </div>
+      </div> -->
       <!-- /.col -->
     </div>
     <!-- /.row -->
@@ -121,15 +123,13 @@
       <!-- accepted payments column -->
       <div class="col-xs-6">
         <p class="lead">Payment Methods:</p>
-        <img src="../../dist/img/credit/visa.png" alt="Visa">
+       <!--  <img src="../../dist/img/credit/visa.png" alt="Visa">
         <img src="../../dist/img/credit/mastercard.png" alt="Mastercard">
         <img src="../../dist/img/credit/american-express.png" alt="American Express">
-        <img src="../../dist/img/credit/paypal2.png" alt="Paypal">
+        <img src="../../dist/img/credit/paypal2.png" alt="Paypal"> -->
 
         <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-          Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr
-          jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
-        </p>
+          The items will be shipped based upon the information you have listed. 
       </div>
       <!-- /.col -->
       <div class="col-xs-6">
@@ -139,20 +139,7 @@
           <table class="table">
             <tr>
               <th style="width:50%">Subtotal:</th>
-              <td>$250.30</td>
-            </tr>
-            <tr>
-              <th>Tax (9.3%)</th>
-              <td>$10.34</td>
-            </tr>
-            <tr>
-              <th>Shipping:</th>
-              <td>$5.80</td>
-            </tr>
-            <tr>
-              <th>Total:</th>
-              <td>Rs.
-            <?php    if(!empty($_SESSION["shopping_cart"]))  
+              <td><?php    if(!empty($_SESSION["shopping_cart"]))  
                           { 
                                 $total = 0;
                                foreach($_SESSION["shopping_cart"] as $keys => $values)  
@@ -165,6 +152,36 @@
                              echo $total;
                           }  
               ?></td>
+            </tr>
+            <tr>
+              <th>Tax </th>
+              <td>2%</td>
+            </tr>
+            <tr>
+              <th>Shipping:</th>
+              <td>Rs. 120</td>
+            </tr>
+            <tr>
+              <th>Total:</th>
+              <td>Rs.
+                
+<?php    if(!empty($_SESSION["shopping_cart"]))  
+                          { 
+                                $total = 0;
+                               foreach($_SESSION["shopping_cart"] as $keys => $values)  
+                               {  
+                            
+                              $total = $total + ($values["item_quantity"] * $values["item_price"]);
+                              $total = $total +120 - ($total*2/100);  
+                             
+                                    // $total = $total + ($values["item_quantity"] * $values["item_price"]);  
+                               }  
+                             echo $total;
+                          }  
+              ?>
+
+
+            </td>
             </tr>
           </table>
         </div>

@@ -10,6 +10,14 @@ class User_Model extends Model
 		parent::__construct();
 	}
 
+	function transactionList(){
+		$query =  $this->db->prepare("SELECT transaction_id,payed_amt,customer.customer_name FROM payment JOIN customer ON customer.customer_id = payment.user_id ORDER BY payment_id DESC LIMIT 0,10");
+		$query->execute();
+		$transaction = $query->fetchAll();
+
+		return $transaction;
+	}
+
 	function salesReport($value = null){
 		$date = date('Y-m-1');
 		$query = $this->db->prepare("SELECT products.product_name,customer.customer_name,customer_product.product_quantity, customer_product.delivered_date FROM customer_product JOIN products ON products.product_id = customer_product.product_id JOIN customer ON customer.customer_id = customer_product.customer_id JOIN users ON products.user_id = users.user_id WHERE customer_product.status = 'delivered' AND customer_product.delivered_date BETWEEN :start_date AND :end_date AND users.user_id = :user_id"); 

@@ -70,7 +70,7 @@ class Order_Model extends Model
 
 		if (empty($data)) {
 			# code...
-			$query = $this->db->prepare("INSERT INTO customer(customer_name, email, address, password, bank_acc, balance) VALUES (:name,:email,:address,md5(:password),:bank_acc)");
+			$query = $this->db->prepare("INSERT INTO customer(customer_name, email, address) VALUES (:name,:email,:address)");
 
 			$getUser = "SELECT * FROM users WHERE user_id = $user_id";
 			$fetch = mysqli_query($connect,$getUser);
@@ -79,9 +79,9 @@ class Order_Model extends Model
 				$query->execute(array(
 						':name' => $row['user_name'],
 						':email' => $row['user_email'],
-						':password' => $row['user_password'],
+						// ':password' => $row['user_password'],
 						':address' => $row['user_address'],
-						':bank_acc' => $row['bank_accno']
+						// ':bank_acc' => $row['bank_accno']
 					));
 			}
 			// print_r($query);
@@ -95,9 +95,9 @@ class Order_Model extends Model
 		$data = $query->fetchAll();
 
 		$id = $data[0][0];
-		$query = $this->db->prepare("INSERT INTO payment(transaction_id, payed_amt, user_id) VALUES (:transaction_id,:payment_amt,:user_id)");
-		$query->execute(array(
-				'transaction_id' => $_POST['transaction_id'],
+		$query1 = $this->db->prepare("INSERT INTO payment(transaction_id, payed_amt, user_id) VALUES (:transaction_id,:payment_amt,:user_id)");
+		$query1->execute(array(
+				'transaction_id' => $_SESSION['t_id'],
 				'payment_amt' => $_POST['amount'],
 				'user_id' => $id
 			));

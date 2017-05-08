@@ -45,7 +45,7 @@
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-                <li class="dropdown">
+           <!--      <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
@@ -92,9 +92,9 @@
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         </li>
-                    </ul>
+                    </ul> -->
                     <!-- /.dropdown-messages -->
-                </li>
+     <!--            </li> -->
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -269,7 +269,17 @@
                         <li>
                             <a href="<?php echo URL; ?>dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
+                             <?php if (Session::get('type') == 1) { ?>
+                                 <li>
+                                    <a href="<?php echo URL; ?>user/producttype">
+                                    <?php 
+                                        
+                                             # code...
+                                            echo "Add Product Type";
+                                         
+                             ?> <!-- Charts --></a></li><?php } ?>
                         <li>
+
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>
                              <?php 
                                 if (Session::get('type') == 1) {
@@ -302,15 +312,7 @@
                                          
                              ?> <!-- Charts --></a> </li><?php } ?>
                                
-                                <?php if (Session::get('type') == 2) { ?>
-                                 <li>
-                                    <a href="<?php echo URL; ?>user/producttype">
-                                    <?php 
-                                        
-                                             # code...
-                                            echo "Add Product Type";
-                                         
-                             ?> <!-- Charts --></a></li><?php } ?>
+                           
                                 
                                 <?php
                                         if (Session::get('type') == 2) {
