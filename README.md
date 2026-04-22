@@ -51,10 +51,10 @@ project-root/
 │── index.php
 │── README.md
 
-
+```
 ---
 
-## ⚙️ Installation
+## Installation
 
 ### 1. Clone the repository
 ### 2. Copy the project to XAMPP htdocs
