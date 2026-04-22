@@ -25,6 +25,7 @@ It is designed for learning, experimentation, and understanding the internal wor
 ---
 
 ## Project Structure
+```
 project-root/
 │── config/
 │ ├── database.php
